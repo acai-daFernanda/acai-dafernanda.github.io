@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Açaí da Fernanda | Monte seu Pedido</title>
+<meta name="description" content="Monte seu açaí, cupuaçu ou mangaba e peça pelo WhatsApp. Entrega em domicílio!">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#2D0C5E">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FoodEstablishment", "name": "Açaí da Fernanda", "url": "https://acai-dafernanda.github.io/", "image": "https://acai-dafernanda.github.io/logo-link.jpg", "telephone": "+5511979908372", "servesCuisine": "Açaí", "address": {"@type": "PostalAddress", "addressLocality": "Itaquaquecetuba", "addressRegion": "SP", "addressCountry": "BR"}, "openingHours": "Mo-Su 13:00-22:00", "sameAs": ["https://www.instagram.com/acai_dafernanda"]}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/twemoji.min.js" crossorigin="anonymous"></script>
+<meta name="color-scheme" content="only light">
+<meta name="darkreader-lock">
+<style>:root { color-scheme: only light; }</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Açaí da Fernanda | Monte seu Pedido">
+<meta property="og:description" content="Escolha sabor, tamanho e acompanhamentos e envie seu pedido pelo WhatsApp.">
+<meta property="og:image" content="https://acai-dafernanda.github.io/logo-link.jpg">
+<meta property="og:image:secure_url" content="https://acai-dafernanda.github.io/logo-link.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://acai-dafernanda.github.io/">
+<meta name="twitter:card" content="summary_large_image">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        roxoFundo: '#1F0A47',
+        roxoEscuro: '#2D0C5E',
+        roxoCard: '#3B0E7A',
+        roxoMedio: '#5A189A',
+        roxoClaro: '#7B2CBF',
+        roxoMuitoClaro: '#FACC15',
+        textoClaro: '#FDE047',
+        verdeOk: '#22C55E',
+        vermelhoErro: '#EF4444',
+        verdeWhats: '#25D366'
+      },
+      fontFamily: {
+        titulo: ['Fredoka One', 'sans-serif'],
+        corpo: ['Roboto', 'sans-serif']
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { box-sizing: border-box; }
+  body { background-color: #FACC15; color: #2D0C5E; font-family: 'Roboto', sans-serif; margin: 0; }
+  header, .painel, #barra-total { color: #FDE047; }
+  .card { background-color: #3B0E7A; border: 2px solid #5A189A; border-radius: 16px; padding: 24px; margin-bottom: 24px; transition: all .3s;  color: #FDE047; }
+  .card:hover { border-color: #7B2CBF; }
+  .opcao { background-color: #4A1599; border: 2px solid #5A189A; border-radius: 12px; padding: 12px; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 8px; user-select: none; }
+  .opcao:hover { border-color: #7B2CBF; background-color: #5A189A; }
+  .opcao.selecionado { border: 3px solid #FACC15; background-color: rgba(250,204,21,0.25); box-shadow: 0 0 14px rgba(250,204,21,0.6); transform: scale(1.02); }
+  .campo-nome { width: 100%; box-sizing: border-box; padding: 14px 16px; border-radius: 12px; border: 2px solid #7B2CBF; background: #4A1599; color: #FACC15; font-size: 17px; font-weight: 700; font-family: inherit; outline: none; transition: all .2s; }
+  .campo-nome::placeholder { color: #FACC15; opacity: .8; font-weight: 400; }
+  .campo-nome:focus { border-color: #FACC15; box-shadow: 0 0 10px rgba(250,204,21,.4); }
+  body { padding-bottom: 84px; }
+  .btn-add { width: 100%; padding: 14px; border-radius: 14px; border: 2px dashed #FACC15; background: transparent; color: #2D0C5E; font-weight: 700; font-size: 16px; cursor: pointer; margin-bottom: 24px; }
+  .btn-add:disabled { opacity: .4; cursor: not-allowed; }
+  .btn-add:not(:disabled) { background: #2D0C5E; color: #FACC15; }
+  .copo-box { border: 1px solid #5A189A; border-radius: 12px; padding: 8px 14px; margin-bottom: 10px; background: rgba(255,255,255,.04); }
+  .copo-box .rm { float: right; background: #B91C1C; color: #fff; border: none; border-radius: 8px; padding: 2px 10px; cursor: pointer; font-weight: 700; }
+  #barra-total { position: fixed; left: 0; right: 0; bottom: 0; z-index: 90; background: #2D0C5E; border-top: 3px solid #FACC15; padding: 10px 16px calc(10px + env(safe-area-inset-bottom,0px)); display: flex; justify-content: space-between; align-items: center; font-weight: 700; }
+  #barra-total button { background: #FACC15; color: #2D0C5E; border: none; border-radius: 999px; padding: 10px 18px; font-weight: 700; cursor: pointer; }
+  .sub { margin-top: 20px; padding-top: 18px; border-top: 1px solid #5A189A; }
+  .card > div.sub:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+  .sub-titulo { font-size: 19px !important; margin: 0 0 10px !important; }
+  img.emoji { height: 1.1em; width: 1.1em; vertical-align: -0.15em; margin: 0 .08em; }
+  .opcao { position: relative; }
+  .card { scroll-margin-top: 58px; animation: sobe .45s ease both; }
+  .opcao.selecionado { animation: pop .22s ease; }
+  @keyframes pop { 0% { transform: scale(.96); } 60% { transform: scale(1.03); } 100% { transform: scale(1); } }
+  @keyframes sobe { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+  @keyframes bump { 50% { transform: scale(1.18); } }
+  .bump { display: inline-block; animation: bump .3s; }
+  .selo { position: absolute; top: -9px; right: 8px; background: #FACC15; color: #2D0C5E; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 999px; box-shadow: 0 1px 4px rgba(0,0,0,.3); white-space: nowrap; }
+  footer.rodape { text-align: center; padding: 8px 16px 20px; font-size: 14px; color: #2D0C5E; line-height: 1.7; }
+  footer.rodape a { color: #2D0C5E; font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+  .abas-tamanho { display: flex; gap: 8px; margin-bottom: 12px; }
+  .aba { flex: 1; padding: 10px 12px; border-radius: 999px; border: 2px solid #5A189A; background: #4A1599; color: #FACC15; font-weight: 700; font-size: 15px; cursor: pointer; transition: all .2s; }
+  .aba:hover { border-color: #FACC15; }
+  .aba.ativa { background: #FACC15; color: #2D0C5E; border-color: #FACC15; }
+  .grade-tam { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .opcao.adicional { border: 2px dashed #7B2CBF; background-color: #4A1599; opacity: .85; }
+  .opcao.adicional .check-ad { width: 26px; height: 26px; color: transparent; text-align: center; flex-shrink: 0; transition: all .2s; }
+  .opcao.adicional.selecionado { border: 3px solid #22C55E; background-color: rgba(34,197,94,.22); box-shadow: 0 0 14px rgba(34,197,94,.55); opacity: 1; transform: none; }
+  .opcao.adicional.selecionado .check-ad { color: #22C55E; }
+  .opcao.extra-pago.selecionado { border: 3px solid #22C55E; background-color: rgba(34,197,94,.22); box-shadow: 0 0 14px rgba(34,197,94,.55); }
+  .opcao.extra-pago.selecionado { flex-wrap: wrap; row-gap: 4px; }
+  .opcao.extra-pago.selecionado > span { flex: 1 1 100%; }
+  .opcao.extra-pago.selecionado::after { content: 'Adicional'; background: #22C55E; color: #052E16; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .3px; padding: 3px 8px; border-radius: 999px; }
+  .opcao.indisponivel { opacity: .5; pointer-events: none; position: relative; }
+  .tag-esgotado { position: absolute; top: 4px; right: 6px; font-size: 9px; background: #B91C1C; color: #fff; padding: 2px 5px; border-radius: 4px; font-weight: 700; }
+  .titulo { font-family: 'Fredoka One', sans-serif; color: #FACC15; }
+  .preco { color: #FACC15; font-weight: 700; }
+  .engrenagem { position: fixed; top: 4px; left: 4px; z-index: 100; width: 30px; height: 30px; border-radius: 50%; background: transparent; border: none; color: #FACC15; display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: .05; transition: opacity .3s; }
+  .engrenagem svg { width: 16px; height: 16px; }
+  .engrenagem:hover { opacity: .7; }
+  .painel { position: fixed; top: 64px; left: 14px; right: 14px; max-width: 480px; z-index: 99; background: #2D0C5E; border: 2px solid #7B2CBF; border-radius: 16px; padding: 16px; max-height: 82vh; overflow-y: auto; opacity: 0; pointer-events: none; transform: translateY(-8px); transition: all .3s; }
+  .painel.aberto { opacity: 1; pointer-events: auto; transform: translateY(0); }
+  .btn-ctrl { padding: 6px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; color: #fff; border: none; cursor: pointer; margin: 3px; }
+  .btn-ctrl.ok { background: #22C55E; }
+  .btn-ctrl.off { background: #EF4444; }
+  .bloqueado { opacity: .6; pointer-events: none; }
+  input[type=checkbox], input[type=radio] { display: none; }
+  .btn-enviar { width: 100%; padding: 18px; border-radius: 999px; font-size: 20px; font-weight: 700; border: none; cursor: pointer; transition: all .2s; }
+  .btn-enviar.liberado { background: #25D366; color: #052E16; }
+  .btn-enviar.liberado:hover { background: #1DA851; transform: translateY(-2px); }
+  .btn-enviar.travado { background: #4B5563; color: #F3F4F6; cursor: not-allowed; }
+</style>
+</head>
+<body>
+
+<!-- ENGRENAGEM / PAINEL DE CONTROLE -->
+<div class="engrenagem" onclick="alternarPainel()"><svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.488.488 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.484.484 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg></div>
+<div class="painel" id="painel">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+    <h3 class="titulo" style="font-size:20px;margin:0">Painel de Controle</h3>
+    <span onclick="alternarPainel()" style="cursor:pointer;font-size:22px;color:#FACC15">&times;</span>
+  </div>
+  <p style="font-size:12px;color:#FACC15;margin:0 0 10px">Clique para marcar como esgotado. Fica salvo automaticamente.</p>
+  <div id="botoes-controle"></div>
+</div>
+
+<!-- CABECALHO -->
+<header style="background:#2D0C5E;padding:20px;text-align:center;border-bottom:2px solid #5A189A">
+  <h1 style="margin:0"><span style="display:inline-block;background:#FEDA14;border-radius:18px;padding:6px 14px"><img src="data:image/jpeg;base64,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" alt="Açaí da Fernanda" style="display:block;height:104px;width:auto"></span></h1>
+  <p style="color:#FACC15;margin:6px 0 0">Açaí • Cupuaçu • Mangaba — Entrega em domicílio</p>
+<button id="btn-instalar" type="button" onclick="instalarApp()" style="display:none;margin-top:12px;background:#FACC15;color:#2D0C5E;border:none;border-radius:999px;padding:10px 20px;font-weight:700;font-size:14px;cursor:pointer">📲 Instalar o app</button>
+</header>
+<div id="aviso-fechada" style="display:none;background:#DC2626;color:#fff;text-align:center;padding:14px;font-weight:700;font-size:17px">🔒 Estamos fechados no momento. Volte em breve!</div>
+
+<main style="max-width:760px;margin:0 auto;padding:20px">
+
+  <div class="card">
+    <h2 class="titulo" style="font-size:22px;margin:0 0 14px">Etapa 1 de 3 — Monte seu copo</h2>
+    <button id="btn-repetir" type="button" class="btn-add" style="display:none;margin:0 0 6px" onclick="repetirUltimo()">🔁 Repetir meu último pedido</button>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Escolha o Sabor (pode escolher mais de um)</h3>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px" id="lista-sabores">
+      <label class="opcao" style="flex-direction:column;text-align:center" data-tipo="sabor" data-nome="Açaí">
+        <input type="checkbox" name="sabor" value="Açaí" onchange="atualizarSabor()">
+        <span style="font-size:32px">🫐</span><span style="font-weight:700">Açaí</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-tipo="sabor" data-nome="Cupuaçu">
+        <input type="checkbox" name="sabor" value="Cupuaçu" onchange="atualizarSabor()">
+        <span style="font-size:32px">🍦</span><span style="font-weight:700">Cupuaçu</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-tipo="sabor" data-nome="Mangaba">
+        <input type="checkbox" name="sabor" value="Mangaba" onchange="atualizarSabor()">
+        <span style="font-size:32px">🥭</span><span style="font-weight:700">Mangaba</span>
+      </label>
+    </div>
+  </div>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Escolha o Tamanho</h3>
+    <p id="aviso-tamanho" style="font-size:13px;color:#FACC15;margin:0 0 12px">Escolha o sabor primeiro</p>
+    <div class="abas-tamanho">
+      <button type="button" class="aba ativa" id="aba-tradicional" onclick="trocarAba('tradicional')">Tradicional</button>
+      <button type="button" class="aba" id="aba-nutella" onclick="trocarAba('nutella')" style="position:relative">🍫 Com Nutella<span class="selo">NOVO</span></button>
+    </div>
+    <div id="tamanhos" class="bloqueado">
+      <div id="grade-tradicional" class="grade-tam">
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="10" data-frutas="1" data-acomp="2">
+        <input type="radio" name="tamanho" value="200ml" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">200ml</span>
+        <span style="font-size:12px">1 fruta • 2 acomp.</span>
+        <span class="preco">R$ 10,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="15" data-frutas="2" data-acomp="3">
+        <input type="radio" name="tamanho" value="300ml" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">300ml</span>
+        <span style="font-size:12px">2 frutas • 3 acomp.</span>
+        <span class="preco">R$ 15,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="20" data-frutas="2" data-acomp="3">
+        <input type="radio" name="tamanho" value="500ml" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">500ml</span>
+        <span style="font-size:12px">2 frutas • 3 acomp.</span>
+        <span class="preco">R$ 20,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="25" data-frutas="3" data-acomp="3">
+        <input type="radio" name="tamanho" value="700ml" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">700ml</span>
+        <span style="font-size:12px">3 frutas • 3 acomp.</span>
+        <span class="preco">R$ 25,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center;grid-column:span 2" data-preco="40" data-frutas="4" data-acomp="4">
+        <input type="radio" name="tamanho" value="1 Litro" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">1 Litro</span>
+        <span style="font-size:12px">4 frutas • 4 acompanhamentos</span>
+        <span class="preco">R$ 40,00</span>
+      </label>
+    </div>
+      <div id="grade-nutella" class="grade-tam" style="display:none">
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="15" data-frutas="1" data-acomp="2">
+        <input type="radio" name="tamanho" value="200ml com Nutella" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">200ml</span>
+        <span style="font-size:12px">1 fruta • 2 acomp.</span>
+        <span class="preco">R$ 15,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="22" data-frutas="2" data-acomp="3">
+        <input type="radio" name="tamanho" value="300ml com Nutella" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">300ml</span>
+        <span style="font-size:12px">2 frutas • 3 acomp.</span>
+        <span class="preco">R$ 22,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="28" data-frutas="2" data-acomp="3">
+        <input type="radio" name="tamanho" value="500ml com Nutella" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">500ml</span>
+        <span style="font-size:12px">2 frutas • 3 acomp.</span>
+        <span class="preco">R$ 28,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center" data-preco="35" data-frutas="3" data-acomp="3">
+        <input type="radio" name="tamanho" value="700ml com Nutella" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">700ml</span>
+        <span style="font-size:12px">3 frutas • 3 acomp.</span>
+        <span class="preco">R$ 35,00</span>
+      </label>
+      <label class="opcao" style="flex-direction:column;text-align:center;grid-column:span 2" data-preco="50" data-frutas="4" data-acomp="4">
+        <input type="radio" name="tamanho" value="1 Litro com Nutella" onchange="atualizarTamanho(this)">
+        <span style="font-weight:700;font-size:18px">1 Litro</span>
+        <span style="font-size:12px">4 frutas • 4 acompanhamentos</span>
+        <span class="preco">R$ 50,00</span>
+      </label>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <div class="card">
+    <h2 class="titulo" style="font-size:22px;margin:0 0 14px">Etapa 2 de 3 — Frutas, acompanhamentos e coberturas</h2>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Frutas e Acompanhamentos</h3>
+    <div class="abas-tamanho"><button type="button" class="aba ativa" id="aba-fr" onclick="trocarAbaFA('fr')">🍓 Frutas</button><button type="button" class="aba" id="aba-ac" onclick="trocarAbaFA('ac')">🥜 Acompanhamentos</button></div>
+    <div id="sec-fr">
+    <p id="aviso-frutas" style="font-size:13px;color:#FACC15;margin:0 0 12px">Escolha o tamanho primeiro</p>
+    <div id="frutas" class="bloqueado" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <label class="opcao" data-tipo="fruta" data-nome="Banana"><input type="checkbox" class="chk-fruta" value="Banana" onchange="atualizarLimites(this)"><span>🍌 Banana</span></label>
+      <label class="opcao" data-tipo="fruta" data-nome="Uva Verde"><input type="checkbox" class="chk-fruta" value="Uva Verde" onchange="atualizarLimites(this)"><span>🍇 Uva Verde</span></label>
+      <label class="opcao" data-tipo="fruta" data-nome="Morango"><input type="checkbox" class="chk-fruta" value="Morango" onchange="atualizarLimites(this)"><span>🍓 Morango</span></label>
+      <label class="opcao" data-tipo="fruta" data-nome="Manga"><input type="checkbox" class="chk-fruta" value="Manga" onchange="atualizarLimites(this)"><span>🥭 Manga</span></label>
+      <label class="opcao" data-tipo="fruta" data-nome="Abacaxi"><input type="checkbox" class="chk-fruta" value="Abacaxi" onchange="atualizarLimites(this)"><span>🍍 Abacaxi</span></label>
+    </div>
+    </div>
+    <div id="sec-ac" style="display:none">
+    <p id="aviso-acomp" style="font-size:13px;color:#FACC15;margin:0 0 12px">Escolha o tamanho primeiro</p>
+    <div id="acompanhamentos" class="bloqueado" style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <label class="opcao" data-tipo="acomp" data-nome="Leite em Pó"><input type="checkbox" class="chk-acomp" value="Leite em Pó" onchange="atualizarLimites(this)"><span>🥛 Leite em Pó</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Paçoca"><input type="checkbox" class="chk-acomp" value="Paçoca" onchange="atualizarLimites(this)"><span>🥜 Paçoca</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Amendoim"><input type="checkbox" class="chk-acomp" value="Amendoim" onchange="atualizarLimites(this)"><span>🥜 Amendoim</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Ovomaltine"><input type="checkbox" class="chk-acomp" value="Ovomaltine" onchange="atualizarLimites(this)"><span>🍫 Ovomaltine</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Sucrilhos"><input type="checkbox" class="chk-acomp" value="Sucrilhos" onchange="atualizarLimites(this)"><span>🥣 Sucrilhos</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Chocoboll"><input type="checkbox" class="chk-acomp" value="Chocoboll" onchange="atualizarLimites(this)"><span>🍫 Chocoboll</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Granola"><input type="checkbox" class="chk-acomp" value="Granola" onchange="atualizarLimites(this)"><span>🌾 Granola</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Granulado"><input type="checkbox" class="chk-acomp" value="Granulado" onchange="atualizarLimites(this)"><span>✨ Granulado</span></label>
+      <label class="opcao" data-tipo="acomp" data-nome="Confete"><input type="checkbox" class="chk-acomp" value="Confete" onchange="atualizarLimites(this)"><span>🎉 Confete</span></label>
+    </div>
+    </div>
+  </div>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Coberturas e Extras</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:14px">
+      <label class="opcao" data-tipo="cobert" data-nome="Cobertura de Chocolate"><input type="checkbox" class="chk-cobert" value="Cobertura de Chocolate" onchange="atualizarResumo()"><span>🍫 Chocolate</span></label>
+      <label class="opcao" data-tipo="cobert" data-nome="Cobertura de Morango"><input type="checkbox" class="chk-cobert" value="Cobertura de Morango" onchange="atualizarResumo()"><span>🍓 Morango</span></label>
+      <label class="opcao" data-tipo="cobert" data-nome="Cobertura de Leite Condensado" style="grid-column:span 2"><input type="checkbox" class="chk-cobert" id="cobert-leite" value="Cobertura de Leite Condensado" onchange="sincronizarLeite()"><span>🥛 Leite Condensado</span></label>
+    </div>
+    <label class="opcao adicional" id="box-adicional">
+      <input type="checkbox" id="adicional-leite" onchange="sincronizarLeite()">
+      <svg class="check-ad" viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12.5 10 18.5 20 6"/></svg>
+      <span>🍯 Adicional de Leite Condensado</span>
+      <span class="preco" style="margin-left:auto">+ R$ 2,00</span>
+    </label>
+  </div>
+  </div>
+
+  <button type="button" class="btn-add" id="btn-add" onclick="novoCopo()" disabled>➕ Adicionar outro copo ao pedido</button>
+
+  <div class="card">
+    <h2 class="titulo" style="font-size:22px;margin:0 0 14px">Etapa 3 de 3 — Finalizar pedido</h2>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Entrega ou Retirada</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <label class="opcao" style="justify-content:center"><input type="radio" name="recebimento" value="Entrega" onchange="atualizarResumo()"><span>🛵 Entrega</span></label>
+      <label class="opcao" style="justify-content:center"><input type="radio" name="recebimento" value="Retirada" onchange="atualizarResumo()"><span>🏪 Retirada</span></label>
+    </div>
+    <p id="aviso-so-retirada" style="display:none;text-align:center;font-weight:700;margin:12px 0 0">🛵 Hoje só estamos com retirada.</p>
+    <p id="tempo-estimado" style="font-size:14px;margin:14px 0 0;text-align:center"></p>
+  </div>
+    <div class="sub" id="bloco-endereco" style="display:none">
+    <h3 class="titulo sub-titulo">Endereço de Entrega</h3>
+    <button type="button" class="btn-add" style="margin:0 0 12px;padding:12px;font-size:15px" onclick="usarMinhaLocalizacao()">📍 Usar minha localização (mais rápido e preciso)</button>
+    <div id="aviso-posicao" style="display:none;margin:0 0 12px;padding:16px 12px;border:3px solid #FACC15;border-radius:12px;background:rgba(250,204,21,.15);font-size:22px;font-weight:700;line-height:1.3;text-align:center">⚠️ Use sempre a opção da <u>posição exata</u></div>
+    <input class="campo-nome" id="end-cep" inputmode="numeric" maxlength="9" autocomplete="off" placeholder="CEP (só números)" oninput="aoDigitarCep()" style="margin-bottom:6px">
+    <p id="cep-status" style="font-size:13px;margin:0 0 10px">Digite o CEP, ou o nome da rua que a gente encontra o CEP para você</p>
+    <div id="mapa-prev" style="display:none;margin:0 0 12px">
+      <iframe title="Mapa do local" style="width:100%;height:200px;border:2px solid #FACC15;border-radius:12px;background:#fff"></iframe>
+      <div id="mapa-acoes"><p style="font-size:13px;margin:6px 0"><strong>O pino no mapa é o local da entrega?</strong></p>
+      <div style="display:flex;gap:8px"><button type="button" class="btn-add" style="margin:0;padding:10px;font-size:14px" onclick="confirmarLocal(true)">✅ Sim, é aqui</button><button type="button" class="btn-add" style="margin:0;padding:10px;font-size:14px" onclick="confirmarLocal(false)">❌ Não é aqui</button></div></div>
+      <p id="mapa-ok" style="display:none;margin:8px 0 0;font-weight:700">✅ Local confirmado no mapa</p>
+    </div>
+    <input type="hidden" id="end-cidade"><input type="hidden" id="end-uf"><input type="hidden" id="end-lat"><input type="hidden" id="end-lng"><input type="hidden" id="end-conf"><input type="hidden" id="end-ok">
+    <input class="campo-nome" id="end-rua" autocomplete="off" placeholder="Rua / Avenida" oninput="aoDigitarRua()" onblur="buscarCepPorRua()" style="margin-bottom:10px">
+    <select class="campo-nome" id="cep-opcoes" onchange="escolherCep(this.value)" style="display:none;margin-bottom:10px"></select>
+    <input class="campo-nome" id="end-num" autocomplete="off" placeholder="Número" oninput="aoMudarEndereco()" style="margin-bottom:10px">
+    <input class="campo-nome" id="end-bairro" autocomplete="off" placeholder="Bairro" oninput="aoMudarEndereco()" style="margin-bottom:10px">
+    <input class="campo-nome" id="end-comp" autocomplete="off" placeholder="Complemento / referência (opcional)" oninput="aoMudarEndereco()">
+    <div id="conf-end" style="display:none;margin-top:14px;padding:12px;border:2px solid #FACC15;border-radius:12px;font-size:14px"></div>
+  </div>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Forma de Pagamento</h3>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+      <label class="opcao"><input type="radio" name="pagamento" value="Dinheiro" onchange="atualizarResumo()"><span>💵 Dinheiro</span></label>
+      <label class="opcao"><input type="radio" name="pagamento" value="Pix" onchange="atualizarResumo()"><span>📱 Pix</span></label>
+      <label class="opcao"><input type="radio" name="pagamento" value="Cartão de Crédito" onchange="atualizarResumo()"><span>💳 Crédito</span></label>
+      <label class="opcao"><input type="radio" name="pagamento" value="Cartão de Débito" onchange="atualizarResumo()"><span>🏧 Débito</span></label>
+    </div>
+  </div>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Observações</h3>
+    <p style="font-size:13px;margin:0 0 12px">Opcional: ex.: sem granola, sem canudo...</p>
+    <textarea class="campo-nome" id="obs" rows="3" maxlength="200" placeholder="Escreva aqui" oninput="atualizarResumo()"></textarea>
+  </div>
+    <div class="sub">
+    <h3 class="titulo sub-titulo">Seu Nome</h3>
+    <p style="font-size:13px;margin:0 0 12px">Para identificarmos o seu pedido</p>
+    <input type="text" id="nome-cliente" maxlength="40" placeholder="Digite seu nome" autocomplete="name" oninput="atualizarResumo()" class="campo-nome">
+  </div>
+  </div>
+
+  <!-- RESUMO -->
+  <div class="card" style="background:#2D0C5E;border-color:#7B2CBF">
+    <h2 class="titulo" style="font-size:22px;margin:0 0 14px">SEU PEDIDO</h2>
+    <div id="resumo" style="line-height:1.9;min-height:120px">
+      <p style="color:#FACC15;font-style:italic">Escolha o sabor e o tamanho para começar...</p>
+    </div>
+    <div style="border-top:1px solid #5A189A;margin-top:14px;padding-top:14px">
+      <p style="font-size:22px;font-weight:700;margin:0">Total: <span id="total" class="preco" style="font-size:26px">R$ 0,00</span></p>
+    </div>
+  </div>
+
+  <button id="btn-enviar" class="btn-enviar travado" onclick="enviarWhatsApp()" disabled>
+    <i class="fa fa-whatsapp"></i> Monte seu pedido primeiro
+  </button>
+
+  <p style="text-align:center;color:#FACC15;font-size:13px;margin-top:16px">(11) 97990-8372 • @acai_dafernanda • Entrega em domicílio</p>
+<p id="link-google" style="display:none;text-align:center;margin:10px 0 24px"><a id="a-google" target="_blank" rel="noopener" style="color:#2D0C5E;font-weight:700">⭐ Gostou? Avalie a gente no Google</a></p>
+</main>
+<footer class="rodape"><strong>Açaí da Fernanda</strong><br>🕐 Todos os dias, das 13h às 22h • 📍 Itaquaquecetuba - SP<br>🛵 Entrega em domicílio ou 🏪 retirada<br>📸 <a href="https://www.instagram.com/acai_dafernanda" target="_blank" rel="noopener">@acai_dafernanda</a> • 💬 <a href="https://wa.me/5511979908372" target="_blank" rel="noopener">(11) 97990-8372</a><br><span style="font-size:12px;opacity:.75">O pedido é confirmado pelo WhatsApp</span></footer>
+
+<div id="barra-total"><span>Total: <span id="total-barra" class="preco">R$ 0,00</span></span><button type="button" onclick="document.getElementById('resumo').scrollIntoView({behavior:'smooth',block:'center'})">Ver pedido ↓</button></div>
+<script>
+// ===== ESTADO =====
+let precoBase = 0, limiteFrutas = 0, limiteAcomp = 0;
+// memoria do que o cliente escolheu (na ordem), para restaurar ao trocar de tamanho
+let memFrutas = [], memAcomp = [];
+let tamanhoEscolhido = '', formaPagamento = '', formaRecebimento = '', nomeCliente = '';
+
+// ===== PAINEL DE CONTROLE =====
+const PIN_PAINEL = '1524';
+function alternarPainel(){
+  const p = document.getElementById('painel');
+  // pede a senha TODA vez que for abrir (fechar não pede)
+  if(!p.classList.contains('aberto') && prompt('Senha do painel:') !== PIN_PAINEL) return;
+  p.classList.toggle('aberto');
+  if(p.classList.contains('aberto')){
+    try{ localStorage.setItem('equipe_acai', '1'); }catch(e){} // aparelho da equipe: as próximas visitas dele não entram na contagem
+    removerMinhaVisita();
+    atualizarPedidosHoje(); atualizarMaisPedidos();
+  }
+}
+
+function carregarDisponibilidade(){
+  try { return JSON.parse(localStorage.getItem('disp_acai') || '{}'); } catch(e){ return {}; }
+}
+// Para o "esgotado" valer em todos os aparelhos: cole aqui a URL do Firebase Realtime Database
+const FIREBASE_URL = 'https://acai-da-fernanda-default-rtdb.firebaseio.com'; // ex.: 'https://meu-projeto-default-rtdb.firebaseio.com'
+let ultimoSalvar = 0;
+function salvarDisponibilidade(d){
+  localStorage.setItem('disp_acai', JSON.stringify(d));
+  if(!FIREBASE_URL) return;
+  ultimoSalvar = Date.now();
+  const { contador, visitas, mais_pedidos, ...resto } = d; // o contador de pedidos é gravado à parte, não pode ser sobrescrito
+  fetch(FIREBASE_URL + '/disp_acai.json', { method: 'PATCH', body: JSON.stringify(resto) })
+    .then(r => { if(!r.ok) alert('Não foi possível salvar para todos os clientes. No Firebase, confira se as regras foram publicadas (erro ' + r.status + ').'); })
+    .catch(() => alert('Sem conexão: o esgotado não foi enviado para os clientes.'));
+}
+async function sincronizarRemoto(){
+  if(!FIREBASE_URL || document.visibilityState === 'hidden' || Date.now() - ultimoSalvar < 6000) return; // aba escondida não consulta (economiza o Firebase e a bateria) // espera o envio terminar antes de reler
+  try{
+    const d = (await (await fetch(FIREBASE_URL + '/disp_acai.json')).json()) || {};
+    delete d.contador; delete d.visitas; delete d.mais_pedidos;
+    if(JSON.stringify(d) === localStorage.getItem('disp_acai')) return;
+    localStorage.setItem('disp_acai', JSON.stringify(d));
+    aplicarDisponibilidade(); montarBotoesControle();
+  }catch(e){}
+}
+
+// ===== NÚMERO DO PEDIDO: contagem do dia, reinicia à meia-noite (horário de Brasília) =====
+const diaBR = () => new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Sao_Paulo' }).format(new Date()); // AAAA-MM-DD
+async function proximoNumeroPedido(){
+  const url = FIREBASE_URL + '/disp_acai/contador/' + diaBR() + '.json';
+  try{
+    let n = await (await fetch(url, { method: 'PUT', body: JSON.stringify({ '.sv': { increment: 1 } }) })).json();
+    if(typeof n !== 'number') n = await (await fetch(url)).json();
+    if(typeof n === 'number') return String(n);
+  }catch(e){}
+  const k = 'pedido_local_' + diaBR(), n = (Number(localStorage.getItem(k)) || 0) + 1; // plano B: contagem só neste aparelho
+  try{ localStorage.setItem(k, n); }catch(e){}
+  return String(n);
+}
+// ===== MAIS PEDIDOS (sabores, tamanhos e complementos; últimos 7 dias, aparece no painel) =====
+function registrarMaisPedidos(copos){
+  if(!FIREBASE_URL) return;
+  const n = {}, add = (cat, nome) => { const k = cat + '/' + String(nome).replace(/[.$#\[\]\/]/g, ''); n[k] = (n[k] || 0) + 1; };
+  copos.forEach(c => { c.sabores.forEach(x => add('Sabores', x)); add('Tamanhos', c.tam); c.frutas.forEach(x => add('Frutas', x)); c.acomp.forEach(x => add('Acompanhamentos', x)); c.cobert.forEach(x => add('Coberturas', x)); });
+  const body = {}; Object.keys(n).forEach(k => { body[k] = { '.sv': { increment: n[k] } }; });
+  fetch(FIREBASE_URL + '/disp_acai/mais_pedidos/' + diaBR() + '.json', { method: 'PATCH', body: JSON.stringify(body) }).catch(() => {});
+}
+async function atualizarMaisPedidos(){
+  const el = document.getElementById('mais-pedidos'); if(!el || !FIREBASE_URL) return;
+  try{
+    const dados = (await (await fetch(FIREBASE_URL + '/disp_acai/mais_pedidos.json')).json()) || {};
+    const ini = new Date(Date.parse(diaBR() + 'T00:00:00Z') - 6 * 864e5).toISOString().slice(0, 10), soma = {};
+    Object.keys(dados).filter(d => d >= ini).forEach(d => Object.entries(dados[d]).forEach(([cat, itens]) => Object.entries(itens).forEach(([nome, q]) => { (soma[cat] = soma[cat] || {})[nome] = ((soma[cat] || {})[nome] || 0) + q; })));
+    el.innerHTML = '<p style="font-weight:700;color:#FACC15;margin:0 0 4px;font-size:13px">Mais pedidos (últimos 7 dias)</p>' +
+      ['Sabores', 'Tamanhos', 'Frutas', 'Acompanhamentos', 'Coberturas'].map(cat => {
+        const top = Object.entries(soma[cat] || {}).sort((a, b) => b[1] - a[1]).slice(0, 3);
+        return '<p style="font-size:12px;margin:2px 0"><strong>' + cat + ':</strong> ' + (top.length ? top.map(([nm, q]) => esc(nm) + ' (' + q + ')').join(', ') : '—') + '</p>';
+      }).join('');
+  }catch(e){}
+}
+async function removerMinhaVisita(){ // quem abre o painel é da equipe: a visita que ele acabou de fazer sai da contagem
+  const dia = sessionStorage.getItem('visita_contada');
+  if(!FIREBASE_URL || !dia) return;
+  sessionStorage.removeItem('visita_contada'); // só tira uma vez
+  try{
+    const url = FIREBASE_URL + '/disp_acai/visitas/' + dia + '.json';
+    const atual = await (await fetch(url)).json();
+    if(typeof atual === 'number' && atual > 0) await fetch(url, { method: 'PUT', body: JSON.stringify({ '.sv': { increment: -1 } }) });
+  }catch(e){}
+  atualizarPedidosHoje();
+}
+async function zerarVisitas(){
+  if(!FIREBASE_URL) return;
+  if(!confirm('Zerar as visitas de hoje? Os pedidos não são afetados.')) return;
+  try{
+    const r = await fetch(FIREBASE_URL + '/disp_acai/visitas/' + diaBR() + '.json', { method: 'PUT', body: '0' });
+    if(!r.ok) throw new Error(r.status);
+    sessionStorage.setItem('visita', '1'); sessionStorage.removeItem('visita_contada'); // zerar já levou a sua visita embora
+    atualizarPedidosHoje();
+  }catch(e){ alert('Não foi possível zerar agora. Tente de novo.'); }
+}
+async function atualizarPedidosHoje(){
+  const el = document.getElementById('pedidos-hoje'); if(!el) return;
+  const [ano, mes, dia] = diaBR().split('-');
+  const rotulo = 'Hoje (' + dia + '/' + mes + '): ';
+  if(!FIREBASE_URL){ el.textContent = rotulo + '—'; return; }
+  try{
+    const [v, p] = await Promise.all(['visitas', 'contador'].map(k => fetch(FIREBASE_URL + '/disp_acai/' + k + '/' + diaBR() + '.json').then(r => r.json())));
+    el.textContent = rotulo + (typeof v === 'number' ? v : 0) + ' visitas • ' + (typeof p === 'number' ? p : 0) + ' pedidos'; // zera sozinho à meia-noite
+  }catch(e){ el.textContent = rotulo + '—'; }
+}
+setInterval(() => { if(document.getElementById('painel').classList.contains('aberto')) atualizarPedidosHoje(); }, 15000);
+
+// ===== HORÁRIO AUTOMÁTICO (13:00 às 22:00, horário de Brasília) + FECHAR/ABRIR MANUAL =====
+const HORA_ABRE = 13, HORA_FECHA = 22;
+function minutosAgoraBR(){
+  const p = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hour12: false }).formatToParts(new Date());
+  return Number(p.find(x => x.type === 'hour').value) * 60 + Number(p.find(x => x.type === 'minute').value);
+}
+function foraDoHorario(){ const m = minutosAgoraBR(); return m < HORA_ABRE * 60 || m >= HORA_FECHA * 60; }
+// Ajuste manual: 'aberta' (abriu fora do horário) vale até o PRÓXIMO fechamento automático (22h);
+// 'fechada' (fechou dentro do horário) vale até a PRÓXIMA abertura automática (13h). Depois volta sozinho ao automático.
+function proximaHoraBR(h){ // próximo instante em que o relógio de Brasília marca h:00 (Brasília = UTC-3)
+  const br = new Date(Date.now() - 3 * 3600e3);
+  let alvo = Date.UTC(br.getUTCFullYear(), br.getUTCMonth(), br.getUTCDate(), h);
+  if(alvo <= br.getTime()) alvo += 24 * 3600e3;
+  return alvo + 3 * 3600e3;
+}
+function lojaModo(){ const d = carregarDisponibilidade(); return (d.loja && d.loja.ate > Date.now() && d.loja.modo) || 'auto'; }
+function lojaFechada(){ const m = lojaModo(); return m === 'fechada' ? true : m === 'aberta' ? false : foraDoHorario(); }
+function alternarLoja(){
+  const abrir = lojaFechada();
+  const fora = foraDoHorario();
+  const d = carregarDisponibilidade();
+  d.loja = abrir ? (fora ? { modo: 'aberta', ate: proximaHoraBR(HORA_FECHA) } : { modo: 'auto', ate: 0 })
+                 : (fora ? { modo: 'auto', ate: 0 } : { modo: 'fechada', ate: proximaHoraBR(HORA_ABRE) });
+  salvarDisponibilidade(d); aplicarDisponibilidade(); montarBotoesControle();
+}
+function textoAjusteManual(){
+  const d = carregarDisponibilidade();
+  if(lojaModo() === 'auto') return '';
+  return ' (ajuste manual até ' + new Date(d.loja.ate).toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) + ')';
+}
+function aplicarLoja(){
+  const f = lojaFechada(), av = document.getElementById('aviso-fechada');
+  av.style.display = f ? 'block' : 'none';
+  av.textContent = lojaModo() === 'fechada' ? '🔒 Estamos fechados no momento. Volte em breve!' : '⏰ Funcionamos das ' + HORA_ABRE + 'h às ' + HORA_FECHA + 'h. Volte no nosso horário!';
+  if(f){
+    const bt = document.getElementById('btn-enviar');
+    bt.disabled = true; bt.className = 'btn-enviar travado'; bt.innerHTML = '🔒 Loja fechada no momento';
+  }
+}
+setInterval(() => atualizarResumo(), 30000);
+
+// ===== PREÇOS EDITÁVEIS (valem para todos os clientes) =====
+const NOMES_TAM = ['200ml', '300ml', '500ml', '700ml', '1 Litro'];
+function aplicarPrecos(){
+  const d = carregarDisponibilidade(); if(!d.precos) return;
+  [['grade-tradicional', 't'], ['grade-nutella', 'n']].forEach(([id, k]) => {
+    const arr = d.precos[k]; if(!arr) return;
+    document.querySelectorAll('#' + id + ' .opcao').forEach((el, i) => {
+      if(arr[i] == null) return;
+      el.dataset.preco = arr[i];
+      el.querySelector('.preco').textContent = 'R$ ' + Number(arr[i]).toFixed(2).replace('.', ',');
+      if(el.querySelector('input').checked) precoBase = Number(arr[i]);
+    });
+  });
+}
+function salvarPrecos(){
+  const le = k => NOMES_TAM.map((_, i) => parseFloat(String(document.getElementById('pr-' + k + i).value).replace(',', '.')));
+  const t = le('t'), n = le('n');
+  if([...t, ...n].some(v => isNaN(v) || v < 0)){ alert('Preencha todos os preços com números válidos.'); return; }
+  const d = carregarDisponibilidade(); d.precos = { t, n };
+  salvarDisponibilidade(d); aplicarDisponibilidade(); montarBotoesControle();
+  alert('Preços salvos!');
+}
+
+// ===== LEMBRAR NOME E ENDEREÇO DO CLIENTE =====
+const CAMPOS_CLIENTE = ['nome-cliente']; // o endereço NÃO é lembrado de propósito: o cliente usa "Usar minha localização" a cada pedido
+const CAMPOS_ENDERECO = ['end-cep', 'end-cidade', 'end-uf', 'end-rua', 'end-num', 'end-bairro', 'end-comp', 'end-lat', 'end-lng', 'end-conf', 'end-ok'];
+let clienteCarregado = false;
+function carregarCliente(){
+  try{
+    const c = JSON.parse(localStorage.getItem('cliente_acai') || '{}');
+    CAMPOS_CLIENTE.forEach(id => { if(c[id]) document.getElementById(id).value = c[id]; });
+  }catch(e){}
+  try{ const c = JSON.parse(localStorage.getItem('cliente_acai') || '{}'); if(c['end-rua'] || c['end-cep']){ CAMPOS_ENDERECO.forEach(k => delete c[k]); localStorage.setItem('cliente_acai', JSON.stringify(c)); } }catch(e){}
+  clienteCarregado = true;
+}
+function salvarCliente(){
+  if(!clienteCarregado) return;
+  try{ const c = {}; CAMPOS_CLIENTE.forEach(id => c[id] = document.getElementById(id).value); localStorage.setItem('cliente_acai', JSON.stringify(c)); }catch(e){}
+}
+
+function estaIndisponivel(tipo, nome){
+  const d = carregarDisponibilidade();
+  return d[tipo] && d[tipo][nome] === false;
+}
+
+function alternarDisponibilidade(tipo, nome){
+  const d = carregarDisponibilidade();
+  if(!d[tipo]) d[tipo] = {};
+  d[tipo][nome] = !(d[tipo][nome] !== false);
+  salvarDisponibilidade(d);
+  aplicarDisponibilidade();
+  montarBotoesControle();
+}
+
+function aplicarDisponibilidade(){
+  aplicarPrecos();
+  let saborRemovido = false;
+  document.querySelectorAll('[data-tipo]').forEach(el => {
+    const tipo = el.dataset.tipo, nome = el.dataset.nome;
+    const input = el.querySelector('input');
+    if(estaIndisponivel(tipo, nome)){
+      el.classList.add('indisponivel');
+      if(!el.querySelector('.tag-esgotado')){
+        const t = document.createElement('span');
+        t.className = 'tag-esgotado'; t.textContent = 'ESGOTADO';
+        el.appendChild(t);
+      }
+      if(input){
+        // se o cliente ja tinha escolhido, tira a escolha (visual e memoria) para nao ficar travado
+        if(input.checked && input.name === 'sabor') saborRemovido = true;
+        input.checked = false; input.disabled = true;
+        el.classList.remove('selecionado', 'bloqueado');
+        if(input.classList.contains('chk-fruta')) memFrutas = memFrutas.filter(n => n !== input.value);
+        if(input.classList.contains('chk-acomp')) memAcomp = memAcomp.filter(n => n !== input.value);
+      }
+    } else {
+      el.classList.remove('indisponivel');
+      const t = el.querySelector('.tag-esgotado'); if(t) t.remove();
+      if(input){ input.disabled = false; el.classList.remove('bloqueado'); }
+    }
+  });
+  // recalcula os bloqueios por limite (libera as outras opcoes) e os itens ligados
+  if(typeof sincronizarLeite === 'function') sincronizarLeite();
+  if(saborRemovido) atualizarSabor();
+  if(carrinho.length){ // copos já adicionados ao pedido: remove o que esgotou e refaz os preços com os valores de hoje
+    const foto = () => JSON.stringify(carrinho.map(c => [c.sabores, c.frutas, c.acomp, c.cobert]));
+    const antes = foto();
+    carrinho = carrinho.map(copoSaneado).filter(Boolean);
+    if(antes !== foto()) setTimeout(() => alert('Algum item do seu pedido acabou e foi retirado. Confira o resumo.'), 50);
+  }
+  atualizarLimites();
+}
+function montarBotoesControle(){
+  const container = document.getElementById('botoes-controle');
+  const grupos = [
+    {titulo:'Sabores', itens:[['sabor','Açaí'],['sabor','Cupuaçu'],['sabor','Mangaba']]},
+    {titulo:'Frutas', itens:[['fruta','Banana'],['fruta','Uva Verde'],['fruta','Morango'],['fruta','Manga'],['fruta','Abacaxi']]},
+    {titulo:'Acompanhamentos', itens:[['acomp','Leite em Pó'],['acomp','Paçoca'],['acomp','Amendoim'],['acomp','Ovomaltine'],['acomp','Sucrilhos'],['acomp','Chocoboll'],['acomp','Granola'],['acomp','Granulado'],['acomp','Confete']]},
+    {titulo:'Coberturas', itens:[['cobert','Cobertura de Chocolate'],['cobert','Cobertura de Morango'],['cobert','Cobertura de Leite Condensado']]}
+  ];
+  const fechadaAgora = lojaFechada(), modo = lojaModo();
+  let html = `<button class="btn-ctrl ${fechadaAgora?'off':'ok'}" style="width:100%;padding:14px;font-size:16px;margin:4px 0 4px" onclick="alternarLoja()">${fechadaAgora?'🔓 ABRIR LOJA agora':'🔒 FECHAR LOJA agora'}</button><p style="font-size:12px;margin:0 0 6px">Horário automático: abre às ${HORA_ABRE}h e fecha às ${HORA_FECHA}h. Agora: ${foraDoHorario()?'fora do horário':'dentro do horário'}. Loja ${fechadaAgora?'FECHADA':'ABERTA'}${textoAjusteManual()}.</p>`;
+  html += `<button class="btn-ctrl ${retiradaSo()?'off':'ok'}" style="width:100%;padding:14px;font-size:16px;margin:2px 0 6px" onclick="alternarSoRetirada()">${retiradaSo()?'🛵 ATIVAR ENTREGA de novo (hoje só retirada)':'🏪 SÓ RETIRADA hoje'}</button>`;
+  grupos.forEach(g => {
+    html += `<p style="font-weight:700;color:#FACC15;margin:10px 0 4px;font-size:13px">${g.titulo}</p><div style="display:flex;flex-wrap:wrap">`;
+    g.itens.forEach(([tipo,nome]) => {
+      const off = estaIndisponivel(tipo, nome);
+      html += `<button class="btn-ctrl ${off?'off':'ok'}" onclick="alternarDisponibilidade('${tipo}','${nome}')">${off?'🚫':'✅'} ${nome.replace('Cobertura de ','')}</button>`;
+    });
+    html += '</div>';
+  });
+  const pr = (k, titulo, grade) => {
+    const els = document.querySelectorAll('#' + grade + ' .opcao');
+    let h = `<p style="font-size:12px;margin:8px 0 4px">${titulo}</p><div style="display:flex;flex-wrap:wrap;gap:6px">`;
+    NOMES_TAM.forEach((nm, i) => { h += `<label style="font-size:11px">${nm}<br><input id="pr-${k}${i}" type="number" step="0.5" min="0" value="${els[i] ? els[i].dataset.preco : ''}" style="width:68px;padding:6px;border-radius:8px;border:1px solid #7B2CBF;background:#4A1599;color:#FACC15;font-weight:700"></label>`; });
+    return h + '</div>';
+  };
+  html += `<p style="font-weight:700;color:#FACC15;margin:14px 0 0;font-size:13px">Preços (R$)</p>` + pr('t', 'Tradicional', 'grade-tradicional') + pr('n', 'Com Nutella', 'grade-nutella') + `<button class="btn-ctrl ok" style="width:100%;padding:12px;margin-top:10px" onclick="salvarPrecos()">💾 Salvar preços</button>`;
+  const tpo = temposAtuais();
+  html += `<p style="font-weight:700;color:#FACC15;margin:14px 0 4px;font-size:13px">Tempo estimado</p><div style="display:flex;gap:6px;flex-wrap:wrap"><label style="font-size:11px">Entrega<br><input id="tp-e" value="${tpo.e}" style="width:130px;padding:6px;border-radius:8px;border:1px solid #7B2CBF;background:#4A1599;color:#FACC15;font-weight:700"></label><label style="font-size:11px">Retirada<br><input id="tp-r" value="${tpo.r}" style="width:130px;padding:6px;border-radius:8px;border:1px solid #7B2CBF;background:#4A1599;color:#FACC15;font-weight:700"></label></div><button class="btn-ctrl ok" style="width:100%;padding:12px;margin-top:10px" onclick="salvarTempos()">💾 Salvar tempos</button>`;
+  const pex = precoExtra();
+  html += `<p style="font-weight:700;color:#FACC15;margin:14px 0 4px;font-size:13px">Preço de cada extra (R$)</p><div style="display:flex;gap:6px;flex-wrap:wrap"><label style="font-size:11px">Fruta extra<br><input id="ex-f" type="number" step="0.5" min="0" value="${pex.f}" style="width:80px;padding:6px;border-radius:8px;border:1px solid #7B2CBF;background:#4A1599;color:#FACC15;font-weight:700"></label><label style="font-size:11px">Acomp. extra<br><input id="ex-a" type="number" step="0.5" min="0" value="${pex.a}" style="width:80px;padding:6px;border-radius:8px;border:1px solid #7B2CBF;background:#4A1599;color:#FACC15;font-weight:700"></label></div><button class="btn-ctrl ok" style="width:100%;padding:12px;margin-top:10px" onclick="salvarExtras()">💾 Salvar extras</button>`;
+  html = `<p id=\"pedidos-hoje\" style=\"font-weight:700;color:#2D0C5E;background:#FACC15;border-radius:10px;padding:8px 12px;margin:0 0 8px;font-size:15px\">Pedidos de hoje: ...</p>` + `<button class="btn-ctrl off" style="width:100%;padding:10px;margin:0 0 8px;font-size:13px" onclick="zerarVisitas()">🔄 Zerar visitas de hoje</button><div id=\"mais-pedidos\" style=\"margin:0 0 10px;padding:8px 10px;border:1px solid #7B2CBF;border-radius:10px;font-size:12px\">Carregando mais pedidos...</div>` + html;
+  container.innerHTML = html;
+  atualizarPedidosHoje(); atualizarMaisPedidos();
+}
+
+function atualizarVisualAdicional(){
+  const ad = document.getElementById('adicional-leite');
+  document.getElementById('box-adicional').classList.toggle('selecionado', ad.checked);
+}
+// ===== SINCRONIA LEITE CONDENSADO =====
+let sincronizando = false;
+function sincronizarLeite(){
+  if(sincronizando) return;
+  sincronizando = true;
+  const adicional = document.getElementById('adicional-leite');
+  const cobert = document.getElementById('cobert-leite');
+  // Se marcou o adicional -> marca a cobertura
+  if(adicional.checked && !cobert.checked) cobert.checked = true;
+  // Se desmarcou a cobertura -> desmarca o adicional
+  if(!cobert.checked && adicional.checked) adicional.checked = false;
+  // Marca visual da cobertura
+  cobert.closest('.opcao').classList.toggle('selecionado', cobert.checked);
+  sincronizando = false;
+  atualizarVisualAdicional();
+  atualizarResumo();
+}
+
+// ===== MARCAR SELECIONADOS (visual) =====
+document.addEventListener('change', function(e){
+  if(e.target.matches('input[type=checkbox], input[type=radio]')){
+    const label = e.target.closest('.opcao');
+    if(!label) return;
+    if(e.target.type === 'radio' && e.target.name){
+      document.querySelectorAll(`input[name="${e.target.name}"]`).forEach(i => i.closest('.opcao').classList.remove('selecionado'));
+    }
+    label.classList.toggle('selecionado', e.target.checked);
+  }
+});
+
+// ===== PASSO 1: SABOR =====
+function atualizarSabor(){
+  const sabores = Array.from(document.querySelectorAll('input[name="sabor"]:checked')).map(i => i.value);
+  const tamanhos = document.getElementById('tamanhos');
+  const aviso = document.getElementById('aviso-tamanho');
+  if(sabores.length > 0){
+    aviso.textContent = 'Escolha o tamanho (' + sabores.join(' + ') + ')';
+    tamanhos.classList.remove('bloqueado');
+  } else {
+    aviso.textContent = 'Escolha o sabor primeiro';
+    tamanhos.classList.add('bloqueado');
+    resetarTudoAposSabor();
+  }
+  atualizarResumo();
+}
+
+function resetarTudoAposSabor(){
+  document.querySelectorAll('input[name="tamanho"]').forEach(i => { i.checked = false; i.closest('.opcao').classList.remove('selecionado'); });
+  tamanhoEscolhido = ''; precoBase = 0; limiteFrutas = 0; limiteAcomp = 0;
+  document.getElementById('frutas').classList.add('bloqueado');
+  document.getElementById('acompanhamentos').classList.add('bloqueado');
+  document.getElementById('aviso-frutas').textContent = 'Escolha o tamanho primeiro';
+  document.getElementById('aviso-acomp').textContent = 'Escolha o tamanho primeiro';
+  limparSelecoes();
+  atualizarLimites(); // zera os contadores das abas (Frutas 0, Acompanhamentos 0) e o destaque dos extras
+}
+
+function limparSelecoes(){
+  memFrutas = []; memAcomp = [];
+  document.querySelectorAll('.chk-fruta, .chk-acomp, .chk-cobert').forEach(cb => { cb.checked = false; cb.closest('.opcao').classList.remove('selecionado', 'extra-pago'); });
+  const al = document.getElementById('adicional-leite'); al.checked = false; al.closest('.opcao').classList.remove('selecionado');
+}
+
+// ===== ABAS DO TAMANHO (Tradicional / Nutella) =====
+function trocarAba(tipo){
+  document.getElementById('aba-tradicional').classList.toggle('ativa', tipo === 'tradicional');
+  document.getElementById('aba-nutella').classList.toggle('ativa', tipo === 'nutella');
+  const gTrad = document.getElementById('grade-tradicional');
+  const gNut = document.getElementById('grade-nutella');
+  const radiosAntigos = Array.from((tipo === 'nutella' ? gTrad : gNut).querySelectorAll('input[name="tamanho"]'));
+  const idx = radiosAntigos.findIndex(r => r.checked);
+  gTrad.style.display = tipo === 'tradicional' ? 'grid' : 'none';
+  gNut.style.display = tipo === 'nutella' ? 'grid' : 'none';
+  // mantem o mesmo tamanho na nova aba (frutas/acomp sao iguais), so muda o preco
+  if(idx >= 0){
+    radiosAntigos[idx].checked = false;
+    radiosAntigos[idx].closest('.opcao').classList.remove('selecionado');
+    const novo = (tipo === 'nutella' ? gNut : gTrad).querySelectorAll('input[name="tamanho"]')[idx];
+    novo.checked = true;
+    novo.closest('.opcao').classList.add('selecionado');
+    precoBase = parseFloat(novo.closest('.opcao').dataset.preco);
+    tamanhoEscolhido = novo.value;
+    atualizarResumo();
+  }
+}
+
+// ===== PASSO 2: TAMANHO =====
+function atualizarTamanho(input){
+  const card = input.closest('.opcao');
+  precoBase = parseFloat(card.dataset.preco);
+  limiteFrutas = parseInt(card.dataset.frutas);
+  limiteAcomp = parseInt(card.dataset.acomp);
+  tamanhoEscolhido = input.value;
+
+  document.getElementById('frutas').classList.remove('bloqueado');
+  document.getElementById('acompanhamentos').classList.remove('bloqueado');
+
+  // restaura o que o cliente ja tinha escolhido (respeitando o limite do novo tamanho)
+  function restaurar(classe, memoria, limite){
+    const cbs = Array.from(document.querySelectorAll(classe));
+    cbs.forEach(cb => { cb.checked = false; cb.closest('.opcao').classList.remove('selecionado'); });
+    let marcados = 0;
+    memoria.forEach(nome => {
+      const cb = cbs.find(c => c.value === nome);
+      if(!cb) return;
+      if(cb.closest('.opcao').classList.contains('indisponivel')) return; // esgotado
+      cb.disabled = false; cb.closest('.opcao').classList.remove('bloqueado');
+      cb.checked = true; cb.closest('.opcao').classList.add('selecionado');
+      marcados++;
+    });
+  }
+  restaurar('.chk-fruta', memFrutas, limiteFrutas);
+  restaurar('.chk-acomp', memAcomp, limiteAcomp);
+  atualizarLimites();
+}
+
+// ===== EXTRAS PAGOS FICAM VERDES =====
+// Os primeiros itens (até o limite do tamanho) estão incluídos; os que vêm depois, na ordem da escolha, são cobrados e ficam verdes.
+function marcarExtrasPagos(){
+  [['.chk-fruta', memFrutas, limiteFrutas], ['.chk-acomp', memAcomp, limiteAcomp]].forEach(([sel, mem, lim]) => {
+    const cbs = Array.from(document.querySelectorAll(sel)), marcadosAgora = cbs.filter(c => c.checked).map(c => c.value);
+    const ordem = mem.filter(n => marcadosAgora.includes(n)).concat(marcadosAgora.filter(n => !mem.includes(n)));
+    const extras = ordem.slice(lim);
+    cbs.forEach(c => c.closest('.opcao').classList.toggle('extra-pago', c.checked && extras.includes(c.value)));
+  });
+}
+
+// ===== LIMITES FRUTAS / ACOMP =====
+function atualizarLimites(el){
+  if(el){
+    const mem = el.classList.contains('chk-fruta') ? memFrutas : memAcomp;
+    const i = mem.indexOf(el.value);
+    if(el.checked && i < 0) mem.push(el.value);
+    if(!el.checked && i >= 0) mem.splice(i, 1);
+  }
+  const fSel = document.querySelectorAll('.chk-fruta:checked').length, aSel = document.querySelectorAll('.chk-acomp:checked').length;
+  document.querySelectorAll('.chk-fruta, .chk-acomp').forEach(cb => { // só o esgotado bloqueia; passar do limite vira extra pago
+    if(!cb.closest('.opcao').classList.contains('indisponivel')){ cb.disabled = false; cb.closest('.opcao').classList.remove('bloqueado'); }
+  });
+  const pe = precoExtra(), r = v => 'R$ ' + Number(v).toFixed(2).replace('.', ',');
+  document.getElementById('aba-fr').textContent = '🍓 Frutas (' + fSel + (limiteFrutas ? '/' + limiteFrutas : '') + ')';
+  document.getElementById('aba-ac').textContent = '🥜 Acompanhamentos (' + aSel + (limiteAcomp ? '/' + limiteAcomp : '') + ')';
+  if(limiteFrutas){
+    document.getElementById('aviso-frutas').textContent = 'Inclui ' + limiteFrutas + ' fruta(s) • cada extra: +' + r(pe.f);
+    document.getElementById('aviso-acomp').textContent = 'Inclui ' + limiteAcomp + ' acompanhamento(s) • cada extra: +' + r(pe.a);
+  }
+  marcarExtrasPagos();
+  atualizarResumo();
+}
+
+// ===== RESUMO + BOTAO =====
+// ===== INSTALAR COMO APP =====
+let promptInstalar = null;
+const jaInstalado = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const mostrarBtnInstalar = () => { if(!jaInstalado()) document.getElementById('btn-instalar').style.display = 'inline-block'; };
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); promptInstalar = e; mostrarBtnInstalar(); });
+window.addEventListener('appinstalled', () => { document.getElementById('btn-instalar').style.display = 'none'; });
+if(/iphone|ipad|ipod/i.test(navigator.userAgent)) mostrarBtnInstalar();
+async function instalarApp(){
+  if(promptInstalar){ promptInstalar.prompt(); await promptInstalar.userChoice; promptInstalar = null; document.getElementById('btn-instalar').style.display = 'none'; }
+  else alert('No iPhone: toque em Compartilhar (o quadrado com a seta) e depois em "Adicionar à Tela de Início".');
+}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(() => {});
+
+// ===== GOOGLE: coloque aqui o link de avaliações do seu Perfil de Empresa (deixe vazio para esconder) =====
+const GOOGLE_AVALIACAO = '';
+if(GOOGLE_AVALIACAO){ document.getElementById('a-google').href = GOOGLE_AVALIACAO; document.getElementById('link-google').style.display = 'block'; }
+
+// ===== CONTADOR DE VISITAS (1 por visita, por dia) =====
+async function contarVisita(){
+  if(!FIREBASE_URL || sessionStorage.getItem('visita') || localStorage.getItem('equipe_acai')) return;
+  sessionStorage.setItem('visita', '1');
+  try{
+    const r = await fetch(FIREBASE_URL + '/disp_acai/visitas/' + diaBR() + '.json', { method: 'PUT', body: JSON.stringify({ '.sv': { increment: 1 } }) });
+    if(r.ok) sessionStorage.setItem('visita_contada', diaBR()); // guarda o dia, para poder desfazer se for da equipe
+  }catch(e){}
+}
+
+// ===== TEMPO ESTIMADO (editável no painel) =====
+const TEMPOS_PADRAO = { e: '30 a 50 minutos', r: '15 a 20 minutos' };
+function temposAtuais(){ const d = carregarDisponibilidade(); return Object.assign({}, TEMPOS_PADRAO, d.tempos || {}); }
+function textoTempo(){ const t = temposAtuais(); return formaRecebimento === 'Entrega' ? t.e : formaRecebimento === 'Retirada' ? t.r : ''; }
+function atualizarTempo(){
+  const el = document.getElementById('tempo-estimado'), t = textoTempo();
+  el.innerHTML = !t ? '' : (formaRecebimento === 'Entrega' ? '🛵 Tempo estimado de entrega: ' : '🏪 Seu pedido fica pronto em cerca de ') + '<strong>' + esc(t) + '</strong>';
+}
+function salvarTempos(){
+  const d = carregarDisponibilidade();
+  d.tempos = { e: document.getElementById('tp-e').value.trim() || TEMPOS_PADRAO.e, r: document.getElementById('tp-r').value.trim() || TEMPOS_PADRAO.r };
+  salvarDisponibilidade(d); aplicarDisponibilidade(); montarBotoesControle(); alert('Tempos salvos!');
+}
+
+// ===== ABAS FRUTAS / ACOMPANHAMENTOS + EXTRAS PAGOS =====
+function trocarAbaFA(t){
+  ['fr', 'ac'].forEach(k => { document.getElementById('sec-' + k).style.display = k === t ? 'block' : 'none'; document.getElementById('aba-' + k).classList.toggle('ativa', k === t); });
+}
+function precoExtra(){ const d = carregarDisponibilidade(); return Object.assign({ f: 2, a: 2 }, d.extras || {}); }
+function extrasDe(frutas, acomp){
+  const pe = precoExtra(), nF = Math.max(0, frutas - limiteFrutas), nA = Math.max(0, acomp - limiteAcomp);
+  return { nF, nA, valor: nF * Number(pe.f) + nA * Number(pe.a) };
+}
+function salvarExtras(){
+  const f = parseFloat(String(document.getElementById('ex-f').value).replace(',', '.')), a = parseFloat(String(document.getElementById('ex-a').value).replace(',', '.'));
+  if(isNaN(f) || isNaN(a) || f < 0 || a < 0){ alert('Preencha com números válidos.'); return; }
+  const d = carregarDisponibilidade(); d.extras = { f, a };
+  salvarDisponibilidade(d); aplicarDisponibilidade(); montarBotoesControle(); alert('Preços dos extras salvos!');
+}
+// ===== SÓ RETIRADA HOJE (vale até a meia-noite) =====
+function retiradaSo(){ const d = carregarDisponibilidade(); return !!(d.soRetirada && d.soRetirada.ate > Date.now()); }
+function alternarSoRetirada(){
+  const d = carregarDisponibilidade(); d.soRetirada = { ate: retiradaSo() ? 0 : proximaHoraBR(0) };
+  salvarDisponibilidade(d); aplicarDisponibilidade(); montarBotoesControle();
+}
+function aplicarSoRetirada(){
+  const so = retiradaSo(), inp = document.querySelector('input[name="recebimento"][value="Entrega"]'), lab = inp.closest('.opcao');
+  lab.classList.toggle('indisponivel', so); inp.disabled = so;
+  if(so && inp.checked){ inp.checked = false; lab.classList.remove('selecionado'); }
+  document.getElementById('aviso-so-retirada').style.display = so ? 'block' : 'none';
+}
+
+// ===== COPO SALVO -> COPO VÁLIDO HOJE (preços, limites e extras refeitos; itens esgotados ou removidos saem) =====
+function copoSaneado(c){
+  const lista = a => Array.isArray(a) ? a.map(String) : [];
+  const ok = sel => Array.from(document.querySelectorAll(sel)).filter(i => !i.closest('.opcao').classList.contains('indisponivel')).map(i => i.value);
+  const rt = c && Array.from(document.querySelectorAll('input[name="tamanho"]')).find(i => i.value === String(c.tam)); if(!rt) return null;
+  const op = rt.closest('.opcao'), NS = ok('input[name="sabor"]'), sabores = lista(c.sabores).filter(x => NS.includes(x)); if(!sabores.length) return null;
+  const NF = ok('.chk-fruta'), NA = ok('.chk-acomp'), NC = ok('.chk-cobert'), pe = precoExtra();
+  const frutas = lista(c.frutas).filter(x => NF.includes(x)), acomp = lista(c.acomp).filter(x => NA.includes(x));
+  const nF = Math.max(0, frutas.length - parseInt(op.dataset.frutas)), nA = Math.max(0, acomp.length - parseInt(op.dataset.acomp));
+  return { sabores, tam: rt.value, preco: parseFloat(op.dataset.preco), frutas, acomp, cobert: lista(c.cobert).filter(x => NC.includes(x)),
+           adicional: !!c.adicional && lista(c.cobert).some(x => NC.includes(x) && /Leite/.test(x)), nF, nA, extra: nF * Number(pe.f) + nA * Number(pe.a) };
+}
+
+// ===== REPETIR ÚLTIMO PEDIDO =====
+function mostrarBtnRepetir(){ try{ if(JSON.parse(localStorage.getItem('ultimo_pedido_acai') || '[]').length) document.getElementById('btn-repetir').style.display = 'block'; }catch(e){} }
+function repetirUltimo(){
+  let lista = []; try{ lista = JSON.parse(localStorage.getItem('ultimo_pedido_acai') || '[]'); }catch(e){}
+  if(!lista.length) return;
+  if((carrinho.length || copoAtual()) && !confirm('Isso substitui o pedido que você está montando. Continuar?')) return;
+  rascunhoBloqueado = false;
+  const c = lista[lista.length - 1]; carrinho = lista.slice(0, -1).map(copoSaneado).filter(Boolean);
+  document.querySelectorAll('input[name="sabor"]').forEach(i => { i.checked = c.sabores.includes(i.value) && !i.disabled; i.closest('.opcao').classList.toggle('selecionado', i.checked); });
+  atualizarSabor();
+  trocarAba(c.tam.includes('Nutella') ? 'nutella' : 'tradicional');
+  memFrutas = c.frutas.slice(); memAcomp = c.acomp.slice();
+  const r = Array.from(document.querySelectorAll('input[name="tamanho"]')).find(x => x.value === c.tam && !x.disabled);
+  if(r){ r.checked = true; document.querySelectorAll('input[name="tamanho"]').forEach(x => x.closest('.opcao').classList.toggle('selecionado', x.checked)); atualizarTamanho(r); }
+  document.querySelectorAll('.chk-cobert').forEach(x => { x.checked = c.cobert.includes(x.value) && !x.disabled; x.closest('.opcao').classList.toggle('selecionado', x.checked); });
+  const ad = document.getElementById('adicional-leite'); const leite = document.querySelector('.chk-cobert[value*="Leite"]'); ad.checked = !!c.adicional && !!leite && leite.checked; ad.closest('.opcao').classList.toggle('selecionado', ad.checked);
+  atualizarResumo();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+// ===== PROGRESSO FIXO, BOTÃO CONTINUAR, AVISO DO QUE FALTA, SELOS E ÍCONES =====
+const SELOS = { '500ml': '⭐ Mais pedido' }; // selos nos tamanhos (troque o texto ou acrescente outros)
+function adicionarSelos(){
+  document.querySelectorAll('input[name="tamanho"]').forEach(i => {
+    const nome = i.value.replace(' com Nutella', '');
+    if(SELOS[nome] && !i.closest('.opcao').querySelector('.selo')) i.closest('.opcao').insertAdjacentHTML('beforeend', '<span class="selo">' + SELOS[nome] + '</span>');
+  });
+}
+const parseEmoji = () => { if(window.twemoji) twemoji.parse(document.body, { folder: 'svg', ext: '.svg' }); };
+let tEmoji; new MutationObserver(() => { clearTimeout(tEmoji); tEmoji = setTimeout(parseEmoji, 60); }).observe(document.body, { childList: true, subtree: true, characterData: true });
+
+let carrinho = [];
+const esc = t => String(t).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const val = id => document.getElementById(id).value.trim();
+const marcados = sel => Array.from(document.querySelectorAll(sel + ':checked')).map(i => i.value);
+function copoAtual(){
+  const sabores = marcados('input[name="sabor"]');
+  if(!sabores.length || !tamanhoEscolhido) return null;
+  return { sabores, tam: tamanhoEscolhido, preco: precoBase, frutas: marcados('.chk-fruta'), acomp: marcados('.chk-acomp'), cobert: marcados('.chk-cobert'), adicional: document.getElementById('adicional-leite').checked, ...(() => { const e = extrasDe(marcados('.chk-fruta').length, marcados('.chk-acomp').length); return { nF: e.nF, nA: e.nA, extra: e.valor }; })() };
+}
+const precoCopo = c => c.preco + (c.adicional ? 2 : 0) + (c.extra || 0);
+const reais = n => 'R$ ' + n.toFixed(2).replace('.', ',');
+function todosCopos(){ const c = copoAtual(); return c ? carrinho.concat([c]) : carrinho.slice(); }
+function linhasCopo(c, b){
+  const l = ['◆ Sabor e tamanho: ' + b(c.sabores.join(' / ') + ' ' + c.tam)];
+  l.push('◆ Frutas: ' + (c.frutas.length ? b(c.frutas.join(', ')) : 'Nenhum'));
+  l.push('◆ Acompanhamentos: ' + (c.acomp.length ? b(c.acomp.join(', ')) : 'Nenhum'));
+  l.push('◆ Coberturas: ' + (c.cobert.length ? b(c.cobert.join(', ')) : 'Nenhuma'));
+  if(c.extra) l.push('◆ Extras: ' + b([c.nA ? c.nA + ' acompanhamento(s)' : '', c.nF ? c.nF + ' fruta(s)' : ''].filter(Boolean).join(' e ') + ' (+' + reais(c.extra) + ')'));
+  if(c.adicional) l.push('◆ Adicional de Leite Condensado: ' + b('Sim'));
+  return l;
+}
+function novoCopo(){
+  const c = copoAtual(); if(!c) return;
+  rascunhoBloqueado = false;
+  carrinho.push(c);
+  document.querySelectorAll('input[name="sabor"]').forEach(i => { i.checked = false; i.closest('.opcao').classList.remove('selecionado'); });
+  atualizarSabor(); trocarAba('tradicional'); trocarAbaFA('fr');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  atualizarResumo();
+}
+function removerCopo(i){ rascunhoBloqueado = false; carrinho.splice(i, 1); atualizarResumo(); }
+// ===== CEP: preenche rua e bairro sozinho (ViaCEP) =====
+// ===== ACHAR O CEP PELO NOME DA RUA (ViaCEP) =====
+let ceps = [], cepAuto = false, buscaRuaT = null, bairroDica = '';
+const cacheRuas = {}; // ruas já procuradas: aparecem na hora
+const semAcento = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+function faixaTem(c, n){ // a faixa de números do CEP (ex.: "de 1 a 99 - lado ímpar") inclui o número n? true / false / null (não dá para saber)
+  const t = semAcento(c); if(!t) return null;
+  if(t.includes('lado par') && n % 2 !== 0) return false;
+  if(t.includes('lado impar') && n % 2 !== 1) return false;
+  let m;
+  if((m = t.match(/de (\d+)(?:\/\d+)? a (\d+)/))) return n >= +m[1] && n <= +m[2];
+  if((m = t.match(/de (\d+)(?:\/\d+)? ao fim/))) return n >= +m[1];
+  if((m = t.match(/ate (\d+)/))) return n <= +m[1];
+  return null;
+}
+function aoDigitarRua(){
+  limparLocalizacao(); resetConfEndereco();
+  atualizarResumo(); clearTimeout(buscaRuaT);
+  if(val('end-cep').replace(/\D/g, '').length === 8 && !cepAuto) return; // quem digitou o CEP não precisa da busca
+  if(val('end-rua').length >= 3) buscaRuaT = setTimeout(buscarCepPorRua, 250); // espera só 0,25 s depois da última letra
+}
+function aoMudarEndereco(){ resetConfEndereco(); atualizarResumo(); if(ceps.length > 1 && (cepAuto || val('end-cep').replace(/\D/g, '').length < 8)) escolherPorFiltro(); }
+async function buscarCepPorRua(){
+  const rua = val('end-rua'), st = document.getElementById('cep-status');
+  if(rua.length < 3 || (val('end-cep').replace(/\D/g, '').length === 8 && !cepAuto)) return;
+  const cidade = val('end-cidade') || 'Itaquaquecetuba', uf = val('end-uf') || 'SP';
+  const chave = semAcento(uf + '|' + cidade + '|' + rua);
+  if(cacheRuas[chave]){ ceps = cacheRuas[chave]; escolherPorFiltro(); return; }
+  st.textContent = 'Procurando o CEP da rua em ' + cidade + '...';
+  try{
+    const ctrl = new AbortController(), t = setTimeout(() => ctrl.abort(), 5000);
+    const lista = await (await fetch('https://viacep.com.br/ws/' + encodeURIComponent(uf) + '/' + encodeURIComponent(cidade) + '/' + encodeURIComponent(rua) + '/json/', { signal: ctrl.signal })).json();
+    clearTimeout(t);
+    if(val('end-rua') !== rua) return; // continuou digitando
+    ceps = Array.isArray(lista) ? lista : []; cacheRuas[chave] = ceps;
+    escolherPorFiltro();
+  }catch(e){ st.textContent = 'Não consegui procurar o CEP agora. Digite o CEP, se souber.'; }
+}
+function escolherPorFiltro(){
+  const st = document.getElementById('cep-status'), sel = document.getElementById('cep-opcoes');
+  if(!ceps.length){ sel.style.display = 'none'; st.textContent = 'Não achei o CEP dessa rua. Confira o nome ou digite o CEP.'; return; }
+  const b = semAcento(val('end-bairro') || bairroDica), n = parseInt(val('end-num'), 10);
+  let c = ceps.filter(x => !b || semAcento(x.bairro).includes(b) || b.includes(semAcento(x.bairro)));
+  if(!c.length) c = ceps;
+  if(!isNaN(n)){ const f = c.filter(x => faixaTem(x.complemento, n) === true), g = c.filter(x => faixaTem(x.complemento, n) !== false); c = f.length ? f : (g.length ? g : c); }
+  if(c.length === 1){ sel.style.display = 'none'; usarCep(c[0]); return; }
+  sel.innerHTML = '<option value="">Escolha o CEP da sua rua...</option>' + c.map(x => '<option value="' + ceps.indexOf(x) + '">' + esc(x.cep + ' • ' + x.bairro + (x.complemento ? ' • ' + x.complemento : '')) + '</option>').join('');
+  sel.style.display = 'block'; st.textContent = c.length + ' CEPs para essa rua: escolha o seu na lista';
+}
+function escolherCep(i){ if(i === '') return; document.getElementById('cep-opcoes').style.display = 'none'; usarCep(ceps[+i]); }
+function usarCep(x){
+  cepAuto = true; resetConfEndereco();
+  document.getElementById('end-cep').value = x.cep;
+  if(x.logradouro) document.getElementById('end-rua').value = x.logradouro;
+  if(x.bairro) document.getElementById('end-bairro').value = x.bairro;
+  document.getElementById('end-cidade').value = x.localidade || ''; document.getElementById('end-uf').value = x.uf || '';
+  document.getElementById('cep-status').textContent = '✓ CEP ' + x.cep + ' • ' + (x.bairro || '') + ' — confira se está certo';
+  atualizarResumo();
+}
+// ===== COMPARTILHAR A LOCALIZAÇÃO DO TELEFONE =====
+function resetConfEndereco(){ document.getElementById('end-ok').value = ''; }
+function confirmarEndereco(){ document.getElementById('end-ok').value = '1'; atualizarResumo(); }
+function atualizarConfEndereco(d){ // caixa final: o cliente confirma o endereço escrito antes de poder enviar
+  const box = document.getElementById('conf-end');
+  if(!d.entrega || !d.camposOk || d.confPend){ box.style.display = 'none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = d.confOk
+    ? '✅ <strong>Endereço confirmado</strong><br><span style="font-size:13px">' + esc(d.end) + '</span>'
+    : '<strong>Confirme o endereço de entrega:</strong><br>' + esc(d.end) + '<br><button type="button" class="btn-add" style="margin:10px 0 0;padding:10px;font-size:14px" onclick="confirmarEndereco()">✅ Está certo, confirmar</button>';
+}
+function limparLocalizacao(){
+  ['end-lat', 'end-lng', 'end-conf'].forEach(i => { document.getElementById(i).value = ''; });
+  document.getElementById('mapa-prev').style.display = 'none'; document.getElementById('aviso-posicao').style.display = 'none';
+  document.getElementById('mapa-acoes').style.display = 'block'; document.getElementById('mapa-ok').style.display = 'none';
+}
+function confirmarLocal(ok){
+  const st = document.getElementById('cep-status');
+  if(ok){ document.getElementById('end-conf').value = '1'; document.getElementById('mapa-acoes').style.display = 'none'; document.getElementById('mapa-ok').style.display = 'block'; document.getElementById('aviso-posicao').style.display = 'none'; st.textContent = '✓ Local confirmado. Confira o CEP e digite o número.'; }
+  else { limparLocalizacao(); resetConfEndereco(); st.textContent = 'Tudo bem! Digite o CEP ou o nome da rua.'; }
+  atualizarResumo();
+}
+function usarMinhaLocalizacao(){
+  const st = document.getElementById('cep-status');
+  if(!navigator.geolocation){ st.textContent = 'Este aparelho não permite pegar a localização. Digite o CEP ou o nome da rua.'; return; }
+  limparLocalizacao();
+  document.getElementById('aviso-posicao').style.display = 'block';
+  st.textContent = 'Pegando a localização com a melhor precisão... (toque em "Permitir" e aguarde uns segundos)';
+  let melhor = null, fim = false, id, timer;
+  const terminar = () => { if(fim) return; fim = true; navigator.geolocation.clearWatch(id); clearTimeout(timer); if(melhor) aplicarLocalizacao(melhor); };
+  id = navigator.geolocation.watchPosition(pos => { // o GPS melhora a cada leitura: guarda a mais precisa
+    if(!melhor || pos.coords.accuracy < melhor.coords.accuracy) melhor = pos;
+    st.textContent = 'Melhorando a precisão... (erro atual: ' + Math.round(melhor.coords.accuracy) + ' m)';
+    if(melhor.coords.accuracy <= 20) terminar();
+  }, err => {
+    if(melhor) return terminar();
+    if(fim) return; fim = true; navigator.geolocation.clearWatch(id); clearTimeout(timer);
+    st.textContent = err.code === 1 ? 'Sem permissão para a localização. Digite o CEP ou o nome da rua.' : 'Não consegui pegar a localização. Digite o CEP ou o nome da rua.';
+  }, { enableHighAccuracy: true, maximumAge: 0, timeout: 12000 });
+  timer = setTimeout(terminar, 8000);
+}
+async function aplicarLocalizacao(pos){
+  const st = document.getElementById('cep-status'), $ = id => document.getElementById(id);
+  const prec = Math.round(pos.coords.accuracy || 99999);
+  if(prec > 500){ // computador sem GPS: a posição vem do Wi-Fi/internet e erra por quarteirões
+    st.textContent = 'A localização deste aparelho é imprecisa (erro de cerca de ' + prec + ' m, comum em computador). Digite o CEP ou o nome da rua.';
+    return;
+  }
+  const lat = pos.coords.latitude.toFixed(6), lng = pos.coords.longitude.toFixed(6);
+  $('end-lat').value = lat; $('end-lng').value = lng; $('end-conf').value = ''; resetConfEndereco();
+  const d = 0.0015; // mapa para o cliente conferir o pino
+  $('mapa-prev').style.display = 'block';
+  $('mapa-prev').querySelector('iframe').src = 'https://www.openstreetmap.org/export/embed.html?bbox=' + [(+lng - 0.002), (+lat - d), (+lng + 0.002), (+lat + d)].join('%2C') + '&layer=mapnik&marker=' + lat + '%2C' + lng;
+  st.textContent = 'Localização encontrada (erro de cerca de ' + prec + ' m). Montando o endereço...';
+  try{
+    const r = await (await fetch('https://nominatim.openstreetmap.org/reverse?format=jsonv2&addressdetails=1&accept-language=pt-BR&lat=' + lat + '&lon=' + lng)).json();
+    const a = r.address || {};
+    const rua = a.road || a.pedestrian || a.residential || '', cidade = a.city || a.town || a.village || a.municipality || '';
+    const uf = (a['ISO3166-2-lvl4'] || '').split('-')[1] || '';
+    bairroDica = a.suburb || a.neighbourhood || a.quarter || a.city_district || ''; // só uma pista: o bairro oficial vem do CEP
+    if(rua) $('end-rua').value = rua;
+    $('end-bairro').value = ''; $('end-cep').value = '';
+    if(cidade) $('end-cidade').value = cidade; if(uf) $('end-uf').value = uf;
+    if(a.house_number) $('end-num').value = a.house_number;
+    cepAuto = true;
+    st.textContent = '✓ ' + (rua || 'Localização compartilhada') + (prec > 50 ? ' (localização aproximada: ative a posição exata e toque no botão de novo)' : '') + ' — confirme o pino no mapa, o CEP e digite o número';
+    if(rua) buscarCepPorRua(); // o CEP e o bairro certos vêm dos Correios (ViaCEP)
+  }catch(e){ st.textContent = '✓ Localização compartilhada (não deu para montar o endereço escrito). Confirme o pino e preencha CEP, rua, número e bairro.'; }
+  atualizarResumo();
+}
+async function aoDigitarCep(){
+  const el = document.getElementById('end-cep'), st = document.getElementById('cep-status');
+  cepAuto = false; document.getElementById('cep-opcoes').style.display = 'none';
+  limparLocalizacao(); resetConfEndereco();
+  const d = el.value.replace(/\D/g, '').slice(0, 8);
+  el.value = d.length > 5 ? d.slice(0, 5) + '-' + d.slice(5) : d;
+  if(d.length < 8){ st.textContent = 'Digite o CEP, ou o nome da rua que a gente encontra o CEP para você'; atualizarResumo(); return; }
+  st.textContent = 'Buscando endereço...';
+  try{
+    const ctrl = new AbortController(), t = setTimeout(() => ctrl.abort(), 6000);
+    const r = await (await fetch('https://viacep.com.br/ws/' + d + '/json/', { signal: ctrl.signal })).json();
+    clearTimeout(t);
+    if(el.value.replace(/\D/g, '') !== d) return; // digitou outro CEP enquanto buscava
+    if(r.erro){ st.textContent = 'CEP não encontrado. Confira ou preencha rua e bairro.'; }
+    else{
+      if(r.logradouro) document.getElementById('end-rua').value = r.logradouro;
+      if(r.bairro) document.getElementById('end-bairro').value = r.bairro;
+      document.getElementById('end-cidade').value = r.localidade || ''; document.getElementById('end-uf').value = r.uf || '';
+      st.textContent = '✓ ' + (r.localidade || '') + ' - ' + (r.uf || '') + ' • agora digite o número';
+      document.getElementById('end-num').focus();
+    }
+  }catch(e){ st.textContent = 'Não consegui buscar o CEP agora. Preencha rua e bairro.'; }
+  atualizarResumo();
+}
+function dadosPedido(){
+  const rec = document.querySelector('input[name="recebimento"]:checked');
+  const pag = document.querySelector('input[name="pagamento"]:checked');
+  formaRecebimento = rec ? rec.value : ''; formaPagamento = pag ? pag.value : ''; nomeCliente = val('nome-cliente');
+  const entrega = formaRecebimento === 'Entrega';
+  document.getElementById('bloco-endereco').style.display = entrega ? 'block' : 'none';
+  const cep = val('end-cep'), cidade = val('end-cidade'), uf = val('end-uf');
+  const end = entrega ? val('end-rua') + ', ' + val('end-num') + ' - ' + val('end-bairro') + (val('end-comp') ? ' (' + val('end-comp') + ')' : '') + (cep ? ' • CEP ' + cep : '') : '';
+  const confPend = !!(val('end-lat') && val('end-lng') && val('end-conf') !== '1'); // localização pedida mas o cliente ainda não confirmou o pino
+  const camposOk = !!(cep.replace(/\D/g, '').length === 8 && val('end-rua') && val('end-num') && val('end-bairro')), confOk = val('end-ok') === '1';
+  const endOk = !entrega || (camposOk && !confPend && confOk); // só envia com o endereço confirmado pelo cliente
+  // link do Google Maps: no WhatsApp ele vira um link que abre o endereço (e a rota) com um toque
+  const lat = val('end-lat'), lng = val('end-lng');
+  const mapa = entrega && endOk ? (lat && lng ? 'https://www.google.com/maps/search/?api=1&query=' + lat + ',' + lng : 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent([val('end-rua') + ', ' + val('end-num'), val('end-bairro'), cidade && uf ? cidade + ' - ' + uf : cidade, cep, 'Brasil'].filter(Boolean).join(', '))) : '';
+  return { entrega, end, endOk, confPend, camposOk, confOk, gps: !!(val('end-lat') && val('end-lng')), mapa, comp: val('end-comp'), obs: val('obs') };
+}
+function atualizarResumo(){
+  aplicarSoRetirada();
+  salvarCliente();
+  atualizarVisualAdicional();
+  const d = dadosPedido(), copos = todosCopos(); atualizarConfEndereco(d); // dadosPedido() atualiza entrega/pagamento/nome: o que depende deles vem depois
+  atualizarTempo();
+  salvarRascunho();
+  const resumo = document.getElementById('resumo'), btn = document.getElementById('btn-enviar');
+  const total = copos.reduce((t, c) => t + precoCopo(c), 0);
+  document.getElementById('total').textContent = reais(total);
+  const tb = document.getElementById('total-barra');
+  if(tb.textContent !== reais(total)){ tb.textContent = reais(total); tb.classList.remove('bump'); void tb.offsetWidth; tb.classList.add('bump'); }
+  document.getElementById('btn-add').disabled = !copoAtual();
+  if(!copos.length){
+    resumo.innerHTML = '<p style="font-style:italic">Escolha o sabor e o tamanho para começar...</p>';
+    btn.disabled = true; btn.className = 'btn-enviar travado';
+    btn.innerHTML = '<i class="fa fa-whatsapp"></i> Monte seu pedido primeiro';
+    aplicarLoja();
+    return;
+  }
+  const B = t => '<strong>' + esc(t) + '</strong>';
+  let h = '';
+  copos.forEach((c, i) => {
+    const doCarrinho = i < carrinho.length;
+    h += '<div class="copo-box">' + (doCarrinho ? '<button class="rm" onclick="removerCopo(' + i + ')">✕</button>' : '') +
+      (copos.length > 1 ? '<p><strong>Copo ' + (i + 1) + '</strong> — ' + reais(precoCopo(c)) + '</p>' : '') +
+      linhasCopo(c, B).map(x => '<p>' + x + '</p>').join('') + '</div>';
+  });
+  h += '<p>◆ Recebimento: ' + (formaRecebimento ? B(formaRecebimento) : 'Ainda não escolhido') + '</p>';
+  if(textoTempo()) h += '<p>◆ Tempo estimado: ' + B(textoTempo()) + '</p>';
+  if(d.entrega) h += '<p>◆ Endereço: ' + (d.endOk ? B(d.end) : 'Preencha o endereço') + '</p>';
+  h += '<p>◆ Forma de Pagamento: ' + (formaPagamento ? B(formaPagamento) : 'Ainda não escolhida') + '</p>';
+  if(d.obs) h += '<p>◆ Observações: ' + B(d.obs) + '</p>';
+  h += '<p>◆ Nome: ' + (nomeCliente ? B(nomeCliente) : 'Ainda não informado') + '</p>';
+  resumo.innerHTML = h;
+  const falta = !formaRecebimento ? 'Escolha entrega ou retirada' : !d.endOk ? (d.confPend ? 'Confirme o local no mapa' : d.camposOk ? 'Confirme o endereço' : 'Preencha o endereço') : !formaPagamento ? 'Escolha a forma de pagamento' : !nomeCliente ? 'Digite seu nome' : '';
+  btn.disabled = !!falta; btn.className = 'btn-enviar ' + (falta ? 'travado' : 'liberado');
+  btn.innerHTML = '<i class="fa fa-whatsapp"></i> ' + (falta || 'Enviar Pedido no WhatsApp');
+  aplicarLoja();
+}
+
+// ===== WHATSAPP =====
+// o WhatsApp não tem tamanho de letra; letras de largura total (ＣＯＰＯ １) aparecem maiores, como um subtítulo
+const larga = t => t.replace(/[A-Z0-9]/g, ch => String.fromCharCode(ch.charCodeAt(0) + 0xFEE0));
+async function enviarWhatsApp(){
+  atualizarResumo();
+  const btnEnv = document.getElementById('btn-enviar');
+  if(btnEnv.disabled) return;
+  btnEnv.disabled = true; btnEnv.innerHTML = 'Enviando...';
+  const janela = window.open('', '_blank'); // abre antes para o navegador não bloquear
+  const d = dadosPedido(), copos = todosCopos(), B = t => '*' + t + '*';
+  const total = copos.reduce((t, c) => t + precoCopo(c), 0);
+  const numero = await proximoNumeroPedido();
+  const hora = new Intl.DateTimeFormat('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date());
+  const vazia = l => /: Nenhuma?$/.test(l); // linhas sem escolha ("Frutas: Nenhum") ficam de fora
+  const L = [
+    '🧾 ' + B('PEDIDO #' + numero) + ' • ' + B(nomeCliente) + ' • ' + hora + '\n' +
+    (d.entrega ? '🛵 ' + B('ENTREGA') : '🏪 ' + B('RETIRADA')) + ' • 💳 ' + B(formaPagamento) + ' • 💰 ' + B(reais(total))
+  ];
+  copos.forEach((c, i) => {
+    // cada copo é um bloco só (linhas coladas); a linha em branco fica entre um copo e outro
+    const titulo = B(larga('COPO ' + (i + 1))) + (copos.length > 1 ? ' de ' + copos.length : '') + ' ━━━━━━━━━━▶' + (copos.length > 1 ? ' ' + B(reais(precoCopo(c))) : '');
+    const linhas = linhasCopo(c, B).filter(l => !vazia(l)).map(l => l.replace(/^◆ (Sabor e tamanho|Frutas|Acompanhamentos|Coberturas):/, '🔹 $1:'));
+    L.push([titulo, ...linhas].join('\n'));
+  });
+  const rodape = ['━━━━━━━━━━━━━━━━━━━━'];
+  if(d.entrega) rodape.push('📍 Endereço: ' + d.mapa); // só o link do Google Maps (o WhatsApp deixa clicável)
+  if(d.entrega && d.gps) rodape.push('📌 Pino do GPS do cliente (ele confirmou no mapa)');
+  if(d.entrega && d.comp) rodape.push('🏠 ' + B('Complemento:') + ' ' + d.comp); // só aparece quando o cliente preenche
+  if(textoTempo()) rodape.push('⏱ Tempo estimado: ' + B(textoTempo()));
+  if(d.obs) rodape.push('⚠️ ' + B('OBSERVAÇÃO:') + ' ' + d.obs);
+  rodape.push('💰 ' + B('TOTAL: ' + reais(total)) + ' (' + formaPagamento + ')');
+  L.push(rodape.join('\n'));
+  const url = 'https://api.whatsapp.com/send?phone=5511979908372&text=' + encodeURIComponent(L.join('\n\n'));
+  try{ localStorage.setItem('ultimo_pedido_acai', JSON.stringify(copos)); }catch(e){} // guarda para o botão "Repetir meu último pedido"
+  mostrarBtnRepetir();
+  registrarMaisPedidos(copos);
+  limparRascunho(); // pedido enviado: não restaurar este pedido de novo (volta a salvar assim que o cliente mexer em algo)
+  pedidoEnviado = true; // ao voltar para o site, reinicia o pedido
+  if(janela) janela.location.href = url; else location.href = url;
+  atualizarPedidosHoje();
+  atualizarResumo();
+}
+
+// ===== FECHA PAINEL AO CLICAR FORA =====
+document.addEventListener('click', function(e){
+  const painel = document.getElementById('painel');
+  const eng = document.querySelector('.engrenagem');
+  // composedPath guarda o caminho do clique mesmo se o botao clicado foi recriado (re-render do painel)
+  const caminho = e.composedPath ? e.composedPath() : [];
+  const dentro = caminho.includes(painel) || painel.contains(e.target);
+  const naEngrenagem = caminho.includes(eng) || eng.contains(e.target);
+  if(!dentro && !naEngrenagem) painel.classList.remove('aberto');
+});
+
+// ===== RASCUNHO DO PEDIDO: salva ao sair da aba e restaura ao voltar (vale 1 hora) =====
+const RASCUNHO_KEY = 'rascunho_acai', RASCUNHO_VALIDADE_MIN = 60; // rascunho mais velho que isso é descartado
+let rascunhoPronto = false, rascunhoBloqueado = false, rascunhoSaida = 0;
+function rascunhoAtual(){
+  const radio = n => { const r = document.querySelector('input[name="' + n + '"]:checked'); return r ? r.value : ''; };
+  return {
+    ts: (document.visibilityState === 'hidden' && rascunhoSaida) ? rascunhoSaida : Date.now(), // a hora conta a partir do momento em que saiu da aba
+    carrinho: carrinho,
+    sabores: marcados('input[name="sabor"]'),
+    aba: document.getElementById('aba-nutella').classList.contains('ativa') ? 'nutella' : 'tradicional',
+    abaFA: document.getElementById('aba-ac').classList.contains('ativa') ? 'ac' : 'fr',
+    tamanho: tamanhoEscolhido,
+    frutas: memFrutas.slice(), acomp: memAcomp.slice(),
+    cobert: marcados('.chk-cobert'),
+    adicional: document.getElementById('adicional-leite').checked,
+    recebimento: radio('recebimento'), pagamento: radio('pagamento'),
+    obs: document.getElementById('obs').value
+  };
+}
+function salvarRascunho(forcar){
+  if(!rascunhoPronto || rascunhoBloqueado) return;
+  if(document.visibilityState === 'hidden' && !forcar) return; // aba em segundo plano: os timers não renovam o prazo
+  try{
+    const r = rascunhoAtual();
+    const vazio = !r.carrinho.length && !r.sabores.length && !r.recebimento && !r.pagamento && !r.obs;
+    if(vazio) localStorage.removeItem(RASCUNHO_KEY); else localStorage.setItem(RASCUNHO_KEY, JSON.stringify(r));
+  }catch(e){}
+}
+function limparRascunho(){ try{ localStorage.removeItem(RASCUNHO_KEY); }catch(e){} rascunhoBloqueado = true; }
+function restaurarRascunho(){
+  try{
+    const r = JSON.parse(localStorage.getItem(RASCUNHO_KEY) || 'null');
+    if(!r || !r.ts || Date.now() - r.ts > RASCUNHO_VALIDADE_MIN * 60000){ localStorage.removeItem(RASCUNHO_KEY); return; }
+    const lista = a => Array.isArray(a) ? a.map(String) : [];
+    const validos = sel => Array.from(document.querySelectorAll(sel)).filter(i => !i.closest('.opcao').classList.contains('indisponivel')).map(i => i.value);
+    const NS = validos('input[name="sabor"]'), NF = validos('.chk-fruta'), NA = validos('.chk-acomp'), NC = validos('.chk-cobert');
+    const filtra = (a, ok) => lista(a).filter(x => ok.includes(x));
+    const radioPor = (nome, v) => Array.from(document.querySelectorAll('input[name="' + nome + '"]')).find(i => i.value === v);
+    const marca = (i, on) => { i.checked = on; i.closest('.opcao').classList.toggle('selecionado', on); };
+
+    // copos já adicionados ao pedido (preço e extras refeitos com os valores atuais)
+    carrinho = (Array.isArray(r.carrinho) ? r.carrinho : []).map(copoSaneado).filter(Boolean);
+
+    // copo que estava sendo montado
+    const sab = filtra(r.sabores, NS);
+    document.querySelectorAll('input[name="sabor"]').forEach(i => marca(i, sab.includes(i.value)));
+    atualizarSabor();
+    if(sab.length){
+      const rt = radioPor('tamanho', String(r.tamanho));
+      trocarAba((rt ? !!rt.closest('#grade-nutella') : r.aba === 'nutella') ? 'nutella' : 'tradicional');
+      if(rt){
+        memFrutas = filtra(r.frutas, NF); memAcomp = filtra(r.acomp, NA);
+        marca(rt, true); atualizarTamanho(rt);
+      }
+      trocarAbaFA(r.abaFA === 'ac' ? 'ac' : 'fr');
+      const cob = filtra(r.cobert, NC);
+      document.querySelectorAll('.chk-cobert').forEach(i => marca(i, cob.includes(i.value)));
+      const ad = document.getElementById('adicional-leite'), leite = document.querySelector('.chk-cobert[value*="Leite"]');
+      ad.checked = !!r.adicional && !!leite && leite.checked;
+    }
+
+    // entrega/retirada, pagamento e observações (nome e endereço já são lembrados à parte)
+    ['recebimento', 'pagamento'].forEach(n => { const el = radioPor(n, String(r[n])); if(el && !el.disabled) marca(el, true); });
+    if(typeof r.obs === 'string') document.getElementById('obs').value = r.obs.slice(0, 200);
+    atualizarResumo();
+  }catch(e){}
+  finally{ rascunhoPronto = true; } // roda mesmo quando não há rascunho (return antecipado)
+}
+// salva quando a pessoa sai da aba (troca de app, bloqueia a tela, fecha o navegador)
+document.addEventListener('visibilitychange', () => {
+  if(document.visibilityState === 'hidden'){ rascunhoSaida = Date.now(); salvarRascunho(true); } else rascunhoSaida = 0;
+});
+window.addEventListener('pagehide', () => salvarRascunho(true));
+document.addEventListener('freeze', () => salvarRascunho(true));
+// depois de enviar o pedido, só volta a salvar quando o cliente mexer em algo
+['change', 'input'].forEach(ev => document.addEventListener(ev, () => { rascunhoBloqueado = false; }, true));
+
+// ===== DEPOIS DE ENVIAR: quando o cliente voltar para o site/app, o pedido recomeça do zero =====
+let pedidoEnviado = false;
+function limparEndereco(){
+  ['end-cep', 'end-cidade', 'end-uf', 'end-rua', 'end-num', 'end-bairro', 'end-comp'].forEach(i => { document.getElementById(i).value = ''; });
+  ceps = []; cepAuto = false; bairroDica = '';
+  document.getElementById('cep-opcoes').style.display = 'none';
+  document.getElementById('cep-status').textContent = 'Digite o CEP, ou o nome da rua que a gente encontra o CEP para você';
+  resetConfEndereco(); limparLocalizacao();
+}
+function reiniciarPedido(){
+  carrinho = []; limparEndereco();
+  document.querySelectorAll('input[name="sabor"], input[name="recebimento"], input[name="pagamento"]').forEach(i => { i.checked = false; i.closest('.opcao').classList.remove('selecionado'); });
+  atualizarSabor();                       // zera tamanho, frutas, acompanhamentos, coberturas e adicional
+  trocarAba('tradicional'); trocarAbaFA('fr');
+  document.getElementById('obs').value = ''; // nome e endereço continuam (o site lembra do cliente)
+  atualizarResumo();
+  window.scrollTo({ top: 0 });
+}
+function voltouAoSite(){
+  if(!pedidoEnviado) return;
+  pedidoEnviado = false;
+  reiniciarPedido();
+  const t = document.createElement('div');
+  t.textContent = '✅ Pedido enviado! Obrigado pela preferência.';
+  t.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:200;background:#22C55E;color:#052E16;font-weight:700;padding:12px 20px;border-radius:999px;box-shadow:0 4px 14px rgba(0,0,0,.4);text-align:center';
+  document.body.appendChild(t); setTimeout(() => t.remove(), 5000);
+}
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') voltouAoSite(); });
+window.addEventListener('pageshow', e => { if(e.persisted) voltouAoSite(); });
+
+// ===== INICIALIZA =====
+carregarCliente();
+adicionarSelos(); parseEmoji();
+mostrarBtnRepetir();
+contarVisita();
+aplicarDisponibilidade();
+montarBotoesControle();
+restaurarRascunho();
+sincronizarRemoto(); setInterval(sincronizarRemoto, 5000);
+document.addEventListener('visibilitychange', () => { if(document.visibilityState === 'visible') sincronizarRemoto(); }); // ao voltar para a aba, atualiza na hora
+// outras abas do mesmo navegador atualizam na hora
+window.addEventListener('storage', e => { if(e.key === 'disp_acai'){ aplicarDisponibilidade(); montarBotoesControle(); } });
+</script>
+</body>
+</html>
